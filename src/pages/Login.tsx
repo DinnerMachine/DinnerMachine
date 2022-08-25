@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useForm } from "@mantine/form";
+import { useForm } from '@mantine/form';
 
-import "../scss/main.scss";
+import '../scss/main.scss';
 
 import {
     TextInput,
@@ -18,29 +18,29 @@ import {
     Divider,
     LoadingOverlay,
     Transition,
-} from "@mantine/core";
+} from '@mantine/core';
 
-import { GoogleButton } from "../components/mantine/SocialButtons/SocialButtons";
+import { GoogleButton } from '../components/mantine/SocialButtons/SocialButtons';
 
-import { signInWithGoogle, LoginData, signedIn } from "../api/Firebase/auth";
-import { useLocation, useNavigate } from "react-router-dom";
-import { User } from "firebase/auth";
-import { getGreeting } from "../util/greetings";
+import { signInWithGoogle, LoginData, signedIn } from '../api/Firebase/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { User } from 'firebase/auth';
+import { getGreeting } from '../util/greetings';
 
 function LoginPage() {
     const form = useForm({
         initialValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
             remember: false,
         },
         validate: {
             email: (value) =>
-                /^\S+@\S+$/.test(value) ? null : "Invalid email",
+                /^\S+@\S+$/.test(value) ? null : 'Invalid email',
             password: (value) =>
                 value.length > 20
                     ? null
-                    : "Password must be at least 20 characters long",
+                    : 'Password must be at least 20 characters long',
         },
     });
 
@@ -55,9 +55,9 @@ function LoginPage() {
 
     let from =
         state?.from?.pathname ||
-        localStorage.getItem("redirectURL") ||
-        "/welcome";
-    localStorage.removeItem("redirectURL");
+        localStorage.getItem('redirectURL') ||
+        '/welcome';
+    localStorage.removeItem('redirectURL');
 
     useEffect(() => {
         signedIn(signedInCallback);
@@ -76,17 +76,17 @@ function LoginPage() {
     }
 
     const googleSignInHandler = function (
-        event: React.MouseEvent<HTMLButtonElement>
+        event: React.MouseEvent<HTMLButtonElement>,
     ): void {
-        localStorage.setItem("redirectURL", from);
+        localStorage.setItem('redirectURL', from);
         let data = form.values as LoginData;
         signInWithGoogle(data).then(() => {
-            navigate("/welcome");
+            navigate('/welcome');
         });
     };
 
     const emailSignInHandler = function (
-        event: React.MouseEvent<HTMLButtonElement>
+        event: React.MouseEvent<HTMLButtonElement>,
     ): void {
         form.validate();
         let data = form.values as LoginData;
@@ -94,17 +94,17 @@ function LoginPage() {
     };
 
     const navigateToRegister = function (
-        event: React.MouseEvent<HTMLAnchorElement>
+        event: React.MouseEvent<HTMLAnchorElement>,
     ): void {
         event.preventDefault();
-        navigate("/register");
+        navigate('/register');
     };
 
     const navigateToResetPassword = function (
-        event: React.MouseEvent<HTMLAnchorElement>
+        event: React.MouseEvent<HTMLAnchorElement>,
     ): void {
         event.preventDefault();
-        navigate("/reset-password");
+        navigate('/reset-password');
     };
 
     return (
@@ -126,8 +126,8 @@ function LoginPage() {
                     {greeting}
                 </Title>
                 <Text color="dimmed" size="sm" align="center" mt={5}>
-                    Don't already have an account?{" "}
-                    <Anchor<"a">
+                    Don't already have an account?{' '}
+                    <Anchor<'a'>
                         href="register"
                         size="sm"
                         onClick={navigateToRegister}
@@ -154,23 +154,23 @@ function LoginPage() {
                         required
                         value={form.values.email}
                         onChange={(event) =>
-                            form.setFieldValue("email", event.target.value)
+                            form.setFieldValue('email', event.target.value)
                         }
-                        {...form.getInputProps("email")}
+                        {...form.getInputProps('email')}
                     />
                     <PasswordInput
                         label="Password"
                         placeholder="Your password"
                         required
                         mt="md"
-                        {...form.getInputProps("password")}
+                        {...form.getInputProps('password')}
                     />
                     <Group position="apart" mt="md">
                         <Checkbox
                             label="Remember me"
-                            {...form.getInputProps("remember")}
+                            {...form.getInputProps('remember')}
                         />
-                        <Anchor<"a">
+                        <Anchor<'a'>
                             onClick={navigateToResetPassword}
                             href="reset-password"
                             size="sm"
@@ -193,7 +193,7 @@ function LoginPage() {
                             >
                                 {form.values.remember
                                     ? "Please don't use this option on public devices."
-                                    : ""}
+                                    : ''}
                             </Text>
                         )}
                     </Transition>
