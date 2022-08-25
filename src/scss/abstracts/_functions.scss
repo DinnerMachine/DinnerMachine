@@ -1,0 +1,13 @@
+@use "colors"as *;
+@use "fonts"as *;
+@use "sass:map";
+
+/*
+@function get-color($category, $name, $shade) {
+  @return map.get(map.get(map.get($colors, $category), $name), $shade);
+}
+
+@function get-font($category, $name, $weight) {
+  @return map.get(map.get(map.get($fonts, $category), $name), $weight);
+}
+*/
