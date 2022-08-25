@@ -24,7 +24,7 @@ Table of Contents
 /* a. Firebase Imports */
 import { FirebaseApp, initializeApp } from 'firebase/app';
 //import { Analytics, getAnalytics } from "firebase/analytics";
-import { Firestore, getFirestore1 } from 'firebase/firestore';
+import { Firestore, getFirestore } from 'firebase/firestore';
 import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 // Exported variables {app, db, storage}
