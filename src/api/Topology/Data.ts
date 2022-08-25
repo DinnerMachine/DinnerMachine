@@ -26,10 +26,10 @@ Table of Contents
 /* ----- 1. Imports ----- */
 
 /* a. Type Imports */
-import { DataJSON } from "./types";
+import { DataJSON } from './types';
 
 /* b. Object Parents */
-import { DMObject } from "./Abstracts";
+import { DMObject } from './Abstracts';
 
 export class Range extends DMObject {
     private min: number;

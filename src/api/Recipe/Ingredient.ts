@@ -1,7 +1,7 @@
-import { DocumentReference } from "firebase/firestore";
-import { DMObject } from "../Topology/Abstracts";
-import { Range } from "../Topology/Data";
-import { DataJSON } from "../Topology/types";
+import { DocumentReference } from 'firebase/firestore';
+import { DMObject } from '../Topology/Abstracts';
+import { Range } from '../Topology/Data';
+import { DataJSON } from '../Topology/types';
 
 export default class Ingredient extends DMObject {
     private name: string;

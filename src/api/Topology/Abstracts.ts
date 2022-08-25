@@ -26,10 +26,10 @@ Table of Contents
 
 /* ----- 1. Imports ----- */
 /* a. Firebase Imports */
-import { DocumentReference, getDoc } from "firebase/firestore";
+import { DocumentReference, getDoc } from 'firebase/firestore';
 
 /* b. Object Parents */
-import { DataJSON } from "./types";
+import { DataJSON } from './types';
 
 export abstract class DMObject {
     protected bound: boolean;

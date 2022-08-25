@@ -1,11 +1,11 @@
-import { Button, ButtonProps, Group } from "@mantine/core";
-import { GoogleIcon } from "./GoogleIcon";
-import { FacebookIcon } from "./FacebookIcon";
+import { Button, ButtonProps, Group } from '@mantine/core';
+import { GoogleIcon } from './GoogleIcon';
+import { FacebookIcon } from './FacebookIcon';
 
 export function GoogleButton(
     props: ButtonProps & {
         onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    }
+    },
 ) {
     return (
         <Button
@@ -22,10 +22,10 @@ export function FacebookButton(props: ButtonProps) {
         <Button
             leftIcon={<FacebookIcon />}
             sx={(theme) => ({
-                backgroundColor: "#4267B2",
-                color: "#fff",
-                "&:hover": {
-                    backgroundColor: theme.fn.darken("#4267B2", 0.1),
+                backgroundColor: '#4267B2',
+                color: '#fff',
+                '&:hover': {
+                    backgroundColor: theme.fn.darken('#4267B2', 0.1),
                 },
             })}
             {...props}

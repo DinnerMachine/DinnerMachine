@@ -38,16 +38,16 @@ import {
     query,
     QuerySnapshot,
     where,
-} from "firebase/firestore";
-import { getDownloadURL, ref, StorageReference } from "firebase/storage";
-import { db, storage } from "../Firebase/init";
+} from 'firebase/firestore';
+import { getDownloadURL, ref, StorageReference } from 'firebase/storage';
+import { db, storage } from '../Firebase/init';
 
 /* b. Object Parents */
-import { DMObject } from "../Topology/Abstracts";
-import { DataJSON } from "../Topology/types";
+import { DMObject } from '../Topology/Abstracts';
+import { DataJSON } from '../Topology/types';
 
 /* c. Type Imports */
-import { MealData, RecipeUserData } from "../Recipe/types";
+import { MealData, RecipeUserData } from '../Recipe/types';
 import {
     Action,
     ActionData,
@@ -55,16 +55,16 @@ import {
     Profile,
     ProfileData,
     UserData,
-} from "./types";
+} from './types';
 
 /* d. Necessary Classes */
-import { PermResolver } from "../Permissions/Perm";
-import Recipe, { RecipeUser } from "../Recipe/Recipe";
-import Meal from "../Recipe/Meal";
-import { MalformedUserError, UserDoesNotExistError } from "./errors";
+import { PermResolver } from '../Permissions/Perm';
+import Recipe, { RecipeUser } from '../Recipe/Recipe';
+import Meal from '../Recipe/Meal';
+import { MalformedUserError, UserDoesNotExistError } from './errors';
 
 /* ----- 2. Constants ----- */
-const USER_COLLECTION = collection(db, "users");
+const USER_COLLECTION = collection(db, 'users');
 
 /* ----- 3. User Class ----- */
 
@@ -122,7 +122,7 @@ export default class User extends DMObject {
             profile.profilePicturePath = profileData.profilePicturePath;
             profile.profilePictureReference = ref(
                 storage,
-                profileData.profilePicturePath
+                profileData.profilePicturePath,
             );
         }
         return profile;
@@ -207,7 +207,7 @@ export default class User extends DMObject {
  */
 export async function generateUser(
     dataJSON: UserData,
-    docRef?: DocumentReference | null
+    docRef?: DocumentReference | null,
 ): Promise<User> {
     // TODO: Implement GlobalRecipes linking.
     // Currently unsure the best way to access parseRecipes function.
@@ -231,13 +231,13 @@ export async function getUserByID(userID: string): Promise<User> {
         (err) => {
             console.log(userData);
             throw new MalformedUserError(err);
-        }
+        },
     );
     return userObj;
 }
 
 export async function getUserByAuthID(authID: string): Promise<User> {
-    let q = query(USER_COLLECTION, where("UUID", "==", authID));
+    let q = query(USER_COLLECTION, where('UUID', '==', authID));
     let querySnapshot = await getDocs(q);
     let userDoc = querySnapshot.docs[0];
     let userData = userDoc.data();
@@ -250,14 +250,14 @@ export async function getUserByAuthID(authID: string): Promise<User> {
         (err) => {
             console.log(userData);
             throw new MalformedUserError(err);
-        }
+        },
     );
     return userObj;
 }
 
 export async function registerUser(userData: InitUserData) {
     let data = {
-        UUID: "",
+        UUID: '',
         perms: {
             groups: [],
             permissions: [],

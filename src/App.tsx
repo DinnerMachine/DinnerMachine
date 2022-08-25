@@ -1,8 +1,8 @@
-import { useState } from "react";
-import HomePage from "./pages/Home";
-import ManagePage from "./pages/Manage";
-import LoginPage from "./pages/Login";
-import "./scss/main.scss";
+import { useState } from 'react';
+import HomePage from './pages/Home';
+import ManagePage from './pages/Manage';
+import LoginPage from './pages/Login';
+import './scss/main.scss';
 import {
     BrowserRouter,
     Routes,
@@ -11,14 +11,14 @@ import {
     Navigate,
     useLocation,
     useNavigate,
-} from "react-router-dom";
-import ProfilePage from "./pages/Profile";
-import { signedIn } from "./api/Firebase/auth";
-import { User } from "firebase/auth";
-import React from "react";
-import { HeaderAction } from "./components/mantine/HeaderAction/HeaderAction";
-import { MantineProvider } from "@mantine/core";
-import { themeColors } from "./theme/colors";
+} from 'react-router-dom';
+import ProfilePage from './pages/Profile';
+import { signedIn } from './api/Firebase/auth';
+import { User } from 'firebase/auth';
+import React from 'react';
+import { HeaderAction } from './components/mantine/HeaderAction/HeaderAction';
+import { MantineProvider } from '@mantine/core';
+import { themeColors } from './theme/colors';
 
 export const AuthContext = React.createContext<{ user: null }>({ user: null });
 
@@ -27,20 +27,20 @@ function App() {
 
     const links = [
         {
-            link: "/register",
-            label: "Sign Up",
+            link: '/register',
+            label: 'Sign Up',
         },
         {
-            link: "/login",
-            label: "Sign In",
+            link: '/login',
+            label: 'Sign In',
         },
         {
-            link: "/profile",
-            label: "Profile",
+            link: '/profile',
+            label: 'Profile',
         },
         {
-            link: "/manage",
-            label: "Manage Recipes",
+            link: '/manage',
+            label: 'Manage Recipes',
         },
     ];
     return (
@@ -49,7 +49,7 @@ function App() {
             withNormalizeCSS
             theme={{
                 colors: themeColors,
-                primaryColor: "primary",
+                primaryColor: 'primary',
                 primaryShade: 5,
             }}
         >
@@ -87,7 +87,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 
     var signedInCallback = (user: User | null, redirect: boolean) => {
         if (!user) {
-            navigate("/login", { state: { from: location }, replace: true });
+            navigate('/login', { state: { from: location }, replace: true });
         }
         //return <Navigate to="/login" state={{ from: location }} replace />;
     };

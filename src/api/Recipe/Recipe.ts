@@ -31,19 +31,19 @@ import {
     DocumentReference,
     getDoc,
     Timestamp,
-} from "firebase/firestore";
-import { db } from "../Firebase/init";
+} from 'firebase/firestore';
+import { db } from '../Firebase/init';
 
 /* b. Object Parents */
-import { DMObject } from "../Topology/Abstracts";
+import { DMObject } from '../Topology/Abstracts';
 
 /* c. Type Imports */
-import { DataJSON } from "../Topology/types";
-import User from "../User/User";
-import Directions from "./Directions";
-import Ingredient from "./Ingredient";
-import Review from "./Review";
-import { RecipeGlobalData } from "./types";
+import { DataJSON } from '../Topology/types';
+import User from '../User/User';
+import Directions from './Directions';
+import Ingredient from './Ingredient';
+import Review from './Review';
+import { RecipeGlobalData } from './types';
 
 /* d. Necessary Classes */
 
@@ -99,7 +99,7 @@ export class RecipeUser extends Recipe {
  */
 export async function generateRecipeUser(
     dataJSON: DataJSON,
-    docRef?: DocumentReference | null
+    docRef?: DocumentReference | null,
 ): Promise<RecipeUser> {
     let recipeGlobalReference = dataJSON.recipeGlobalReference;
     if (recipeGlobalReference) {
@@ -156,7 +156,7 @@ export class RecipeGlobal extends Recipe {
 }
 
 export async function RecipeGlobalFromReference(
-    globalReference: DocumentReference
+    globalReference: DocumentReference,
 ): Promise<RecipeGlobal> {
     let refDoc = await getDoc(globalReference);
     let refData = <RecipeGlobalData>refDoc.data();
@@ -166,5 +166,5 @@ export async function RecipeGlobalFromReference(
 }
 
 export namespace RecipeUtils {
-    export var recipes = collection(db, "recipes");
+    export var recipes = collection(db, 'recipes');
 }

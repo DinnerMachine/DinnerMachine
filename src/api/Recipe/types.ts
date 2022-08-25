@@ -1,9 +1,9 @@
-import { DocumentReference, Timestamp } from "firebase/firestore";
-import User from "../User/User";
-import Directions from "./Directions";
-import Ingredient from "./Ingredient";
-import { RecipeUser } from "./Recipe";
-import Review from "./Review";
+import { DocumentReference, Timestamp } from 'firebase/firestore';
+import User from '../User/User';
+import Directions from './Directions';
+import Ingredient from './Ingredient';
+import { RecipeUser } from './Recipe';
+import Review from './Review';
 
 export type RecipeGlobalData = {
     attachments: string[];
@@ -31,7 +31,7 @@ export type RecipeUserData = {
     lastDate?: Timestamp;
     rating?: number;
     familyRating?: number;
-    type: "RecipeUser";
+    type: 'RecipeUser';
 };
 
 export type MealData = {
@@ -41,11 +41,11 @@ export type MealData = {
     prepTime?: number;
     cookTime?: number;
     factor: number;
-    meal: "Breakfast" | "Lunch" | "Dinner" | "Snack";
+    meal: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
     recipeUserReference?: DocumentReference;
     recipeUser?: RecipeUser;
     timeEaten: Timestamp;
     timeRecorded: Timestamp;
 
-    type: "Meal";
+    type: 'Meal';
 };

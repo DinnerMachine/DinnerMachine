@@ -1,7 +1,7 @@
-import { DocumentReference, Timestamp } from "firebase/firestore";
-import { StorageReference } from "firebase/storage";
-import { MealData, RecipeUserData } from "../Recipe/types";
-import { DataJSON } from "../Topology/types";
+import { DocumentReference, Timestamp } from 'firebase/firestore';
+import { StorageReference } from 'firebase/storage';
+import { MealData, RecipeUserData } from '../Recipe/types';
+import { DataJSON } from '../Topology/types';
 
 export type UserData = DataJSON & {
     UUID: string;
@@ -16,7 +16,7 @@ export type UserData = DataJSON & {
     tokens: {
         [key: string]: string;
     };
-    type: "User";
+    type: 'User';
 };
 
 export type InitUserData = {

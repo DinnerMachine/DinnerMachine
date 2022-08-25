@@ -1,8 +1,8 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Button } from "@mantine/core";
+import { Button } from '@mantine/core';
 
 function HomePage() {
     const [count, setCount] = useState(0);

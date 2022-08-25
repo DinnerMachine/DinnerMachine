@@ -17,10 +17,10 @@ import {
     signInWithRedirect,
     User,
     UserCredential,
-} from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
-import { app } from "./init";
+import { app } from './init';
 
 export type LoginData = {
     email: string;
@@ -33,7 +33,7 @@ const provider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 
 export function signedIn(
-    callback: (user: User | null, redirect: boolean) => void
+    callback: (user: User | null, redirect: boolean) => void,
 ): void {
     getRedirectResult(auth).then((userCredential) => {
         if (userCredential) {
@@ -53,7 +53,7 @@ export function signedIn(
 
 export function signInWithGoogle(
     data: LoginData,
-    popup?: boolean
+    popup?: boolean,
 ): Promise<UserCredential> {
     if (popup) {
         return signInWithPopup(auth, provider);

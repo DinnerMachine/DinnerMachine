@@ -7,17 +7,17 @@ import {
     Button,
     Skeleton,
     Center,
-} from "@mantine/core";
+} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
     card: {
         backgroundColor:
-            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+            theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     },
 
     avatar: {
         border: `2px solid ${
-            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white
+            theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
         }`,
     },
 }));
@@ -98,7 +98,7 @@ export function UserCardImage({
                 {name}
             </TextLoader>
             <TextLoader align="center" size="sm" color="dimmed">
-                {username ? "@" + username : null}
+                {username ? '@' + username : null}
             </TextLoader>
             <Group mt="md" position="center" spacing={30}>
                 {items}
@@ -108,7 +108,7 @@ export function UserCardImage({
                 radius="md"
                 mt="xl"
                 size="md"
-                color={theme.colorScheme === "dark" ? undefined : "dark"}
+                color={theme.colorScheme === 'dark' ? undefined : 'dark'}
             >
                 Follow
             </Button>

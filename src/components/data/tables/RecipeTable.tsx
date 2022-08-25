@@ -1,7 +1,7 @@
-import { ActionIcon, Checkbox, Group, Table } from "@mantine/core";
-import { RecipeUser } from "../../../api/Recipe/Recipe";
-import { IconTrash, IconPencil } from "@tabler/icons";
-import React from "react";
+import { ActionIcon, Checkbox, Group, Table } from '@mantine/core';
+import { RecipeUser } from '../../../api/Recipe/Recipe';
+import { IconTrash, IconPencil } from '@tabler/icons';
+import React from 'react';
 
 function RecipeTable({ recipes }: { recipes: RecipeUser[] }) {
     const [selection, setSelection] = React.useState<string[]>([]);
@@ -9,13 +9,13 @@ function RecipeTable({ recipes }: { recipes: RecipeUser[] }) {
         setSelection((current) =>
             current.includes(id)
                 ? current.filter((item) => item !== id)
-                : [...current, id]
+                : [...current, id],
         );
     const toggleAll = () =>
         setSelection((current) =>
             current.length === recipes.length
                 ? []
-                : recipes.map((item) => item.getName())
+                : recipes.map((item) => item.getName()),
         );
 
     const rows = recipes.map((recipe) => {

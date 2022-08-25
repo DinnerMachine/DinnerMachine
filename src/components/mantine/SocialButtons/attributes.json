@@ -2,7 +2,10 @@
   "title": "Social buttons",
   "category": "buttons",
   "author": "rtivital",
-  "dependencies": ["/core/button/", "/core/group/"],
+  "dependencies": [
+    "/core/button/",
+    "/core/group/"
+  ],
   "canvas": {
     "center": true
   }
