@@ -18,7 +18,7 @@ import { User } from 'firebase/auth';
 import React from 'react';
 import { HeaderAction } from './components/mantine/HeaderAction/HeaderAction';
 import { MantineProvider } from '@mantine/core';
-import { themeColors } from './theme/colors';
+import DMTheme from './theme/theme';
 
 export const AuthContext = React.createContext<{ user: null }>({ user: null });
 
@@ -44,15 +44,7 @@ function App() {
         },
     ];
     return (
-        <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-                colors: themeColors,
-                primaryColor: 'primary',
-                primaryShade: 5,
-            }}
-        >
+        <MantineProvider withGlobalStyles withNormalizeCSS theme={DMTheme}>
             <HeaderAction links={links}></HeaderAction>
             <Routes>
                 <Route path="/" element={<HomePage />} />

@@ -2,14 +2,14 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { useState } from 'react';
 
-import { Button } from '@mantine/core';
+import { Button, Title } from '@mantine/core';
 
 function HomePage() {
     const [count, setCount] = useState(0);
 
     return (
         <div className="App">
-            <h1>DinnerMachine</h1>
+            <Title>DinnerMachine</Title>
             <Button onClick={() => setCount((count) => count + 1)}>
                 count is {count}
             </Button>

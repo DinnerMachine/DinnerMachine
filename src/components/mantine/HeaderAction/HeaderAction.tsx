@@ -12,6 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons';
 import { Link, NavLink, Router, useNavigate } from 'react-router-dom';
+import NavbarLogo from '../../logos/NavbarLogo';
 
 const HEADER_HEIGHT = 60;
 
@@ -130,7 +131,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
                         className={classes.burger}
                         size="sm"
                     />
-                    <Title>DinnerMachine</Title>
+                    <NavbarLogo />
                 </Group>
                 <Group spacing={5} className={classes.links}>
                     {items}
