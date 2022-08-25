@@ -1,10 +1,10 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - Util/Secrets -
 
 @file: api/Util/Secrets.ts
 @author: Dallin Guisti
-@description: RecipeGen utility for
+@description: DinnerMachine utility for
     reading and writing secrets.
 @version: 1.0.0
 @created 8/21/2022

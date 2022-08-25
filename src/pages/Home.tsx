@@ -9,7 +9,7 @@ function HomePage() {
 
     return (
         <div className="App">
-            <h1>Dinerator</h1>
+            <h1>DinnerMachine</h1>
             <Button onClick={() => setCount((count) => count + 1)}>
                 count is {count}
             </Button>

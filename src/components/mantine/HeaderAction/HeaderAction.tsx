@@ -130,7 +130,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
                         className={classes.burger}
                         size="sm"
                     />
-                    <Title>RecipeGen</Title>
+                    <Title>DinnerMachine</Title>
                 </Group>
                 <Group spacing={5} className={classes.links}>
                     {items}

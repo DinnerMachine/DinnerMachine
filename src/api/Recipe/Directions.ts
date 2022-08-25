@@ -1,3 +1,3 @@
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 
-export default class Directions extends RGObject {}
+export default class Directions extends DMObject {}

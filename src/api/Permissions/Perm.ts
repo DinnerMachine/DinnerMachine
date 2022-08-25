@@ -1,4 +1,4 @@
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 
 export default {};
-export class PermResolver extends RGObject {}
+export class PermResolver extends DMObject {}

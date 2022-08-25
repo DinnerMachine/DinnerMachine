@@ -150,7 +150,7 @@ function LoginPage() {
                     />
                     <TextInput
                         label="Email"
-                        placeholder="john.doe@recipegen.com"
+                        placeholder="john.doe@DinnerMachine.com"
                         required
                         value={form.values.email}
                         onChange={(event) =>

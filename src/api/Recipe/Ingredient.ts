@@ -1,9 +1,9 @@
 import { DocumentReference } from "firebase/firestore";
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 import { Range } from "../Topology/Data";
 import { DataJSON } from "../Topology/types";
 
-export default class Ingredient extends RGObject {
+export default class Ingredient extends DMObject {
     private name: string;
     private display: string;
     private quantity: number | Range;

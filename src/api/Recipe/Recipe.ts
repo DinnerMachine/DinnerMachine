@@ -1,5 +1,5 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - Recipe/Recipe -
 
 @file: api/Recipe/Recipe.ts
@@ -35,7 +35,7 @@ import {
 import { db } from "../Firebase/init";
 
 /* b. Object Parents */
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 
 /* c. Type Imports */
 import { DataJSON } from "../Topology/types";
@@ -47,7 +47,7 @@ import { RecipeGlobalData } from "./types";
 
 /* d. Necessary Classes */
 
-export default class Recipe extends RGObject {
+export default class Recipe extends DMObject {
     /**
      * @description Recipe class for recipe management.
      * @param dataJSON DataJSON object to initialize Recipe class with.

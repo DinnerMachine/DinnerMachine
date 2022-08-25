@@ -1,5 +1,5 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - Topology/Abstracts -
 
 @file: api/Topology/Abstracts.ts
@@ -21,7 +21,7 @@ Table of Contents
     a. Firebase
     b. Object Parents
 2. Abstract Classes
-    a. RGObject
+    a. DMObject
 */
 
 /* ----- 1. Imports ----- */
@@ -31,15 +31,15 @@ import { DocumentReference, getDoc } from "firebase/firestore";
 /* b. Object Parents */
 import { DataJSON } from "./types";
 
-export abstract class RGObject {
+export abstract class DMObject {
     protected bound: boolean;
     protected dataJSON: DataJSON;
     protected docRef: DocumentReference | null;
 
     /** 
-    @description Generic RGObject with methods for general data management.
-    @param dataJSON DataJSON object to initialize RGObject class with.
-    @param docRef - DocumentReference to bind RGObject class to.
+    @description Generic DMObject with methods for general data management.
+    @param dataJSON DataJSON object to initialize DMObject class with.
+    @param docRef - DocumentReference to bind DMObject class to.
     */
     constructor(dataJSON: DataJSON, docRef?: DocumentReference | null) {
         this.bound = false;

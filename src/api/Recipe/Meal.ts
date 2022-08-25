@@ -1,9 +1,9 @@
 import { DocumentReference } from "firebase/firestore";
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 import { RecipeUser } from "./Recipe";
 import { MealData } from "./types";
 
-export default class Meal extends RGObject {
+export default class Meal extends DMObject {
     private name: string;
     private notes: string;
     private rating?: number;

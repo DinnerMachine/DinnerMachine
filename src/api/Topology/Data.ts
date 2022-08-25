@@ -1,11 +1,11 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - Topology/Data -
 
 @file: api/Topology/Data.ts
 @author: Dallin Guisti
 @description: Data classes to help
-    manage RecipeGen data.
+    manage DinnerMachine data.
 @version: 1.0.0
 @created 8/21/2022
 @updated 8/21/2022
@@ -29,14 +29,14 @@ Table of Contents
 import { DataJSON } from "./types";
 
 /* b. Object Parents */
-import { RGObject } from "./Abstracts";
+import { DMObject } from "./Abstracts";
 
-export class Range extends RGObject {
+export class Range extends DMObject {
     private min: number;
     private max: number;
 
     /**
-     * @description Manages RecipeGen numeric ranges.
+     * @description Manages DinnerMachine numeric ranges.
      * @param rangeJSON DataJSON object to initialize Range class with.
      * @param docRef DocumentReference to bind Range class to.
      */

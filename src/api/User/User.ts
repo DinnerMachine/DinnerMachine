@@ -1,5 +1,5 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - User/User -
 
 @file: api/User/User.ts
@@ -43,7 +43,7 @@ import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { db, storage } from "../Firebase/init";
 
 /* b. Object Parents */
-import { RGObject } from "../Topology/Abstracts";
+import { DMObject } from "../Topology/Abstracts";
 import { DataJSON } from "../Topology/types";
 
 /* c. Type Imports */
@@ -68,8 +68,8 @@ const USER_COLLECTION = collection(db, "users");
 
 /* ----- 3. User Class ----- */
 
-/** User class that houses RecipeGen user data. */
-export default class User extends RGObject {
+/** User class that houses DinnerMachine user data. */
+export default class User extends DMObject {
     /* Internal data variables */
     private UUID: string;
     private permResolver: PermResolver;

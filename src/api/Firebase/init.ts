@@ -1,5 +1,5 @@
 /*
-~ ~ ~ RecipeGen - Recipe Manager & Generator ~ ~ ~
+~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - Firebase/init -
 
 @file: api/Firebase/init.ts
@@ -37,13 +37,13 @@ export var storage: FirebaseStorage;
 function initFirebase() {
     // Define firebase config
     const firebaseConfig = {
-        apiKey: "AIzaSyBdVKzLSBtNb7yvWMEdkWGBBGJhR1Cf8D8",
-        authDomain: "recipegenerate.firebaseapp.com",
-        projectId: "recipegenerate",
-        storageBucket: "recipegenerate.appspot.com",
-        messagingSenderId: "876601430125",
-        appId: "1:876601430125:web:e01b72753e2a3a67baef64",
-        measurementId: "G-JP64MF3L9Z",
+        apiKey: "AIzaSyAl-Yig17gfO2Zj3PdlYi0B4N4R-j_x_D0",
+        authDomain: "dinner-machine.firebaseapp.com",
+        projectId: "dinner-machine",
+        storageBucket: "dinner-machine.appspot.com",
+        messagingSenderId: "499180484804",
+        appId: "1:499180484804:web:601ab8e25cbbd98f71b191",
+        measurementId: "G-Y8BXCP73ZC",
     };
 
     // Initialize Firebase
