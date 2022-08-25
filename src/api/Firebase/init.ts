@@ -22,10 +22,10 @@ Table of Contents
 
 /* ----- 1. Imports ----- */
 /* a. Firebase Imports */
-import { FirebaseApp, initializeApp } from "firebase/app";
+import { FirebaseApp, initializeApp } from 'firebase/app';
 //import { Analytics, getAnalytics } from "firebase/analytics";
-import { Firestore, getFirestore } from "firebase/firestore";
-import { FirebaseStorage, getStorage } from "firebase/storage";
+import { Firestore, getFirestore1 } from 'firebase/firestore';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 // Exported variables {app, db, storage}
 export var firebaseInitialized = false;
@@ -37,13 +37,13 @@ export var storage: FirebaseStorage;
 function initFirebase() {
     // Define firebase config
     const firebaseConfig = {
-        apiKey: "AIzaSyAl-Yig17gfO2Zj3PdlYi0B4N4R-j_x_D0",
-        authDomain: "dinner-machine.firebaseapp.com",
-        projectId: "dinner-machine",
-        storageBucket: "dinner-machine.appspot.com",
-        messagingSenderId: "499180484804",
-        appId: "1:499180484804:web:601ab8e25cbbd98f71b191",
-        measurementId: "G-Y8BXCP73ZC",
+        apiKey: 'AIzaSyAl-Yig17gfO2Zj3PdlYi0B4N4R-j_x_D0',
+        authDomain: 'dinner-machine.firebaseapp.com',
+        projectId: 'dinner-machine',
+        storageBucket: 'dinner-machine.appspot.com',
+        messagingSenderId: '499180484804',
+        appId: '1:499180484804:web:601ab8e25cbbd98f71b191',
+        measurementId: 'G-Y8BXCP73ZC',
     };
 
     // Initialize Firebase
