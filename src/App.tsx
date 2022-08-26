@@ -19,6 +19,7 @@ import React from 'react';
 import { HeaderAction } from './components/mantine/HeaderAction/HeaderAction';
 import { MantineProvider } from '@mantine/core';
 import DMTheme from './theme/theme';
+import RegisterPage from './pages/Register';
 
 export const AuthContext = React.createContext<{ user: null }>({ user: null });
 
@@ -57,7 +58,7 @@ function App() {
                     }
                 />
                 <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route path="reset-password" element={<LoginPage />} />
                 <Route path="welcome" element={<HomePage />} />
                 <Route

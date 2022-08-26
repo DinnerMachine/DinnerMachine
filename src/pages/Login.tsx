@@ -116,15 +116,7 @@ function LoginPage() {
             />
 
             <Container size={420} my={40}>
-                <Title
-                    align="center"
-                    sx={(theme) => ({
-                        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-                        fontWeight: 900,
-                    })}
-                >
-                    {greeting}
-                </Title>
+                <Title align="center">{greeting}</Title>
                 <Text color="dimmed" size="sm" align="center" mt={5}>
                     Don't already have an account?{' '}
                     <Anchor<'a'>
