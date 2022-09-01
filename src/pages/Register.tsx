@@ -32,12 +32,44 @@ import { getGreeting } from '../util/greetings';
 function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const [active, setActive] = useState(0);
-    const [stepComplete, setStepComplete] = useState(true);
+    const [stepComplete, setStepComplete] = useState(false);
+
+    document.title = 'DinnerMachine | Register';
 
     const nextStep = () =>
         setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
+
+    const form = useForm({
+        initialValues: {
+            email: '',
+            password: '',
+            confirm_password: '',
+        },
+        validate: {
+            email: (value) =>
+                /^\S+@\S+$/.test(value) ? null : 'Invalid email',
+            password: (value) =>
+                value.length > 20
+                    ? null
+                    : 'Password must be at least 20 characters long',
+            confirm_password: (value) =>
+                value == 'hi' ? null : 'Please input your password again!',
+        },
+    });
+
+    function checkForm(event: React.ChangeEvent<HTMLInputElement>) {
+        form.setFieldValue(event.target.name, event.target.value);
+        form.validate();
+        console.log('Checking...');
+        console.log(event.target.value);
+        if (form.isValid()) {
+            setStepComplete(true);
+        } else {
+            setStepComplete(false);
+        }
+    }
 
     return (
         <div className="App">
@@ -103,19 +135,23 @@ function RegisterPage() {
                         </Divider>
                         <TextInput
                             label="Email"
+                            type="email"
                             placeholder="john.doe@dinnermachine.com"
                             required
+                            onChange={checkForm}
                         />
                         <PasswordInput
                             label="Password"
                             placeholder="Your password"
                             required
+                            onChange={checkForm}
                             mt="md"
                         />
                         <PasswordInput
                             label="Confirm Password"
                             placeholder="Your password again"
                             required
+                            onChange={checkForm}
                             mt="md"
                         />
                         <Group position="center" mt="xl">

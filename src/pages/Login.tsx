@@ -28,6 +28,8 @@ import { User } from 'firebase/auth';
 import { getGreeting } from '../util/greetings';
 
 function LoginPage() {
+    document.title = 'DinnerMachine | Login';
+
     const form = useForm({
         initialValues: {
             email: '',
