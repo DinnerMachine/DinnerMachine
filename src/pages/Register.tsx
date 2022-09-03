@@ -47,6 +47,7 @@ function RegisterPage() {
             password: '',
             confirm_password: '',
         },
+        validateInputOnChange: true,
         validate: {
             email: (value) =>
                 /^\S+@\S+$/.test(value) ? null : 'Invalid email',
@@ -54,16 +55,23 @@ function RegisterPage() {
                 value.length > 20
                     ? null
                     : 'Password must be at least 20 characters long',
-            confirm_password: (value) =>
-                value == 'hi' ? null : 'Please input your password again!',
+            confirm_password: (value, values) =>
+                value == values.password
+                    ? null
+                    : 'Please input your password again!',
         },
     });
 
-    function checkForm(event: React.ChangeEvent<HTMLInputElement>) {
-        form.setFieldValue(event.target.name, event.target.value);
+    function updateForm(name: string) {
+        return (event: React.ChangeEvent<HTMLInputElement>) => {
+            console.log(`Value '${name}' changed to '${event.target.value}'`);
+            form.setFieldValue(name, event.target.value);
+            checkForm();
+        };
+    }
+
+    function checkForm() {
         form.validate();
-        console.log('Checking...');
-        console.log(event.target.value);
         if (form.isValid()) {
             setStepComplete(true);
         } else {
@@ -138,20 +146,23 @@ function RegisterPage() {
                             type="email"
                             placeholder="john.doe@dinnermachine.com"
                             required
-                            onChange={checkForm}
+                            onChange={updateForm('email')}
+                            {...form.getInputProps('email')}
                         />
                         <PasswordInput
                             label="Password"
                             placeholder="Your password"
                             required
-                            onChange={checkForm}
+                            onChange={updateForm('password')}
+                            {...form.getInputProps('password')}
                             mt="md"
                         />
                         <PasswordInput
                             label="Confirm Password"
                             placeholder="Your password again"
                             required
-                            onChange={checkForm}
+                            onChange={updateForm('confirm_password')}
+                            {...form.getInputProps('confirm_password')}
                             mt="md"
                         />
                         <Group position="center" mt="xl">
