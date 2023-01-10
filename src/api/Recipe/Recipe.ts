@@ -7,164 +7,112 @@
 @description: Recipe class for recipe management.
 @version: 1.0.0
 @created 8/21/2022
-@updated 8/21/2022
+@updated 1/2/2023
 
-Copyright (c) 2022 Dallin Guisti. All rights reserved.
+Copyright (c) 2023 Dallin Guisti. All rights reserved.
 */
 
-/*
-=================
-Table of Contents
-=================
-1. Imports
-    a. Firebase
-    b. Object Parents
-    c. Types
-    d. Necessary Classes
-2. Recipe Class
-*/
-
-/* ----- 1. Imports ----- */
-/* a. Firebase Imports */
 import {
-    collection,
+    doc,
     DocumentReference,
+    collection,
     getDoc,
-    Timestamp,
-} from "firebase/firestore";
-import { db } from "../Firebase/init";
+    CollectionReference,
+} from 'firebase/firestore';
+import { DMObject } from '@api/topology/Abstracts';
+import { RecipeGlobalDataReference } from '@api/recipe/types';
+import { db } from '@api/Firebase/init';
+import Category, { CategoryConverter } from '@api/organization/Category';
+import { CategoryDoesNotExistError } from '@api/organization/errors';
+import User, { UserConverter } from '@api/user/User';
+import { StorageReference } from 'firebase/storage';
+import { UserDoesNotExistError } from '@api/User/errors';
 
-/* b. Object Parents */
-import { DMObject } from "../Topology/Abstracts";
-
-/* c. Type Imports */
-import { DataJSON } from "../Topology/types";
-import User from "../User/User";
-import Directions from "./Directions";
-import Ingredient from "./Ingredient";
-import Review from "./Review";
-import { RecipeGlobalData } from "./types";
-
-/* d. Necessary Classes */
-
-export default class Recipe extends DMObject {
-    /**
-     * @description Recipe class for recipe management.
-     * @param dataJSON DataJSON object to initialize Recipe class with.
-     * @param docRef DocumentReference to bind Recipe class to.
-     */
-    constructor(dataJSON: DataJSON, docRef?: DocumentReference | null) {
-        super(dataJSON, docRef);
-    }
-}
-
-export class RecipeUser extends Recipe {
-    private name: string;
-    private lastDate: Date;
-    private rating?: number;
-    private familyRating?: number;
-    private recipeGlobalReference: DocumentReference;
-    private recipeGlobal?: RecipeGlobal;
-
-    /**
-     * @description User implememntation of Recipe class.
-     * @param dataJSON DataJSON object to initialize Recipe class with.
-     * @param docRef DocumentReference to bind Recipe class to.
-     */
-    constructor(dataJSON: DataJSON, docRef?: DocumentReference | null) {
-        super(dataJSON, docRef);
-
-        this.name = dataJSON.name;
-        this.lastDate = dataJSON.lastDate.toDate();
-        this.rating = dataJSON.rating;
-        this.familyRating = dataJSON.familyRating;
-        this.recipeGlobalReference = dataJSON.recipeGlobalReference;
-        this.recipeGlobal = dataJSON.recipeGlobal;
-    }
-
-    public getName(): string {
-        return this.name;
-    }
-
-    public getLastDate(): Date {
-        return this.lastDate;
-    }
-}
-
-/**
- * @description Generates a new RecipeUser object (required for GlobalRecipe access)
- * @param dataJSON DataJSON object to initialize Recipe class with.
- * @param docRef DocumentReference to bind Recipe class to.
- * @returns RecipeUser object.
- */
-export async function generateRecipeUser(
-    dataJSON: DataJSON,
-    docRef?: DocumentReference | null
-): Promise<RecipeUser> {
-    let recipeGlobalReference = dataJSON.recipeGlobalReference;
-    if (recipeGlobalReference) {
-        dataJSON.recipeGlobal = await getDoc(recipeGlobalReference);
-    }
-    return new RecipeUser(dataJSON, docRef);
-}
-
-export class RecipeGlobal extends Recipe {
-    private attachments: string[];
+export default class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
+    private attachments: StorageReference[]; // ==> Attachments
     private author?: string;
-    private category: string;
+    private category: DocumentReference; // ==> Category
     private prepTime?: number;
     private cookTime?: number;
     private serves?: number;
-    private creatorReference: DocumentReference;
-    private creator?: User;
-    private description: string;
-    private directions: Directions;
-    private ingredients: Ingredient[];
+    private creator?: DocumentReference; // ==> User
+    private description?: string;
+    private directions: CollectionReference; // ==> Directions
+    private ingredients: CollectionReference; // ==> Ingredients
     private name: string;
-    private reviews: Review[];
-    private tags: string[];
-    private thumbnailPath?: string;
-    private sourceUrls: string[];
+    private reviews: CollectionReference; // ==> Reviews
+    private tags: DocumentReference[]; // ==> Tags
+    private thumbnail?: StorageReference;
+    private sources: DocumentReference[]; // ==> Sources
     private private: boolean;
+    private type: 'RecipeGlobal' = 'RecipeGlobal';
 
-    /**
-     * @description Global implememntation of Recipe class.
-     * @param dataJSON DataJSON object to initialize Recipe class with.
-     * @param docRef DocumentReference to bind Recipe class to.
-     */
-    constructor(dataJSON: RecipeGlobalData, docRef?: DocumentReference | null) {
-        super(dataJSON, docRef);
+    constructor(
+        data: RecipeGlobalDataReference,
+        docRef?: DocumentReference | null,
+    ) {
+        super(data, docRef);
+        this.attachments = data.attachments;
+        this.author = data.author;
+        this.category = data.category;
+        this.prepTime = data.prepTime;
+        this.cookTime = data.cookTime;
+        this.serves = data.serves;
+        this.creator = data.creator;
+        this.description = data.description;
+        this.directions = data.directions;
+        this.ingredients = data.ingredients;
+        this.name = data.name;
+        this.reviews = data.reviews;
+        this.tags = data.tags;
+        this.thumbnail = data.thumbnail;
+        this.sources = data.sources;
+        this.private = data.private;
+    }
 
-        this.attachments = dataJSON.attachments;
-        this.author = dataJSON.author;
-        this.category = dataJSON.category;
-        this.prepTime = dataJSON.prepTime;
-        this.cookTime = dataJSON.cookTime;
-        this.serves = dataJSON.serves;
-        this.creatorReference = dataJSON.creatorReference;
-        this.creator = dataJSON.creator;
-        this.description = dataJSON.description;
-        this.directions = dataJSON.directions;
-        this.ingredients = dataJSON.ingredients;
-        this.name = dataJSON.name;
-        this.reviews = dataJSON.reviews;
-        this.tags = dataJSON.tags;
-        this.thumbnailPath = dataJSON.thumbnailPath;
-        this.sourceUrls = dataJSON.sourceUrls;
-        this.private = dataJSON.private;
+    async getCategory(): Promise<CategoryDoesNotExistError | Category> {
+        const categoryRef = this.category.withConverter(CategoryConverter);
+        const category = await getDoc(categoryRef);
+        if (!category.exists())
+            return new CategoryDoesNotExistError(
+                'The requested category does not exist.',
+            );
+        else return category.data();
+    }
+
+    async getCreator(): Promise<UserDoesNotExistError | User | null> {
+        if (!this.creator) return null;
+        const creatorRef = this.creator.withConverter(UserConverter);
+        const creator = await getDoc(creatorRef);
+        if (!creator.exists())
+            return new UserDoesNotExistError(
+                'The requested creator does not exist.',
+            );
+        else return creator.data();
+    }
+
+    async getDirections(): Promise<Directions> {
+        return new Directions(this.directions);
+    }
+
+    async getIngredients(): Promise<Ingredients> {
+        return new Ingredients(this.ingredients);
+    }
+
+    async getReviews(): Promise<Reviews> {
+        return new Reviews(this.reviews);
+    }
+
+    async getTags(): Promise<Tags> {
+        return new Tags(this.tags);
+    }
+
+    async getSources(): Promise<Sources> {
+        return new Sources(this.sources);
     }
 }
 
-export async function RecipeGlobalFromReference(
-    globalReference: DocumentReference
-): Promise<RecipeGlobal> {
-    let refDoc = await getDoc(globalReference);
-    let refData = <RecipeGlobalData>refDoc.data();
-
-    let refObj = new RecipeGlobal(refData, globalReference);
-    return refObj;
-}
-
 export namespace RecipeUtils {
-    export var recipes = collection(db, "recipes");
+    export var recipes = collection(db, 'recipes');
+    export var categories = collection(db, 'categories');
 }

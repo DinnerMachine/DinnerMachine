@@ -10,7 +10,7 @@
 @created 8/21/2022
 @updated 8/21/2022
 
-Copyright (c) 2022 Dallin Guisti. All rights reserved.
+Copyright (c) 2023 Dallin Guisti. All rights reserved.
 */
 
 /*
@@ -25,6 +25,7 @@ Table of Contents
 /**
  * @description DataJSON type, used to store generic DinnerMachine data.
  */
-export type DataJSON = {
+export type DMObjectData = {
     [key: string]: any;
+    type: string;
 };

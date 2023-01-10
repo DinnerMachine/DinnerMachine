@@ -10,7 +10,7 @@
 @created 8/20/2022
 @updated 8/21/2022
 
-Copyright (c) 2022 Dallin Guisti. All rights reserved.
+Copyright (c) 2023 Dallin Guisti. All rights reserved.
 */
 
 /*
@@ -26,26 +26,48 @@ Table of Contents
 
 /* ----- 1. Imports ----- */
 /* a. Firebase Imports */
-import { DocumentReference, getDoc } from "firebase/firestore";
+import {
+    DocumentReference,
+    FirestoreDataConverter,
+    getDoc,
+} from 'firebase/firestore';
 
 /* b. Object Parents */
-import { DataJSON } from "./types";
+import { DMObjectData } from './types';
 
-export abstract class DMObject {
+export abstract class DMObject<DMObjectData> {
     protected bound: boolean;
-    protected dataJSON: DataJSON;
+    protected data: DMObjectData;
     protected docRef: DocumentReference | null;
 
     /** 
     @description Generic DMObject with methods for general data management.
-    @param dataJSON DataJSON object to initialize DMObject class with.
+    @param data DMObjectData object to initialize DMObject class with.
     @param docRef - DocumentReference to bind DMObject class to.
     */
-    constructor(dataJSON: DataJSON, docRef?: DocumentReference | null) {
+    constructor(data: DMObjectData, docRef?: DocumentReference | null) {
         this.bound = false;
-        this.dataJSON = dataJSON;
+        this.data = data;
         this.docRef = docRef || null;
 
         if (docRef) this.bound = true;
     }
+
+    getData(): DMObjectData {
+        return this.data;
+    }
 }
+
+export abstract class DMCollection {}
+
+const DMObjectConverter: FirestoreDataConverter<DMObject> = {
+    toFirestore: (object: DMObject) => {
+        return object.getDataJSON();
+    },
+    fromFirestore: async (snapshot, options) => {
+        const data = snapshot.data(options);
+        const docRef = snapshot.ref;
+        const dmObject = new DMObject(data as DMObjectData, docRef);
+        return dmObject;
+    },
+};

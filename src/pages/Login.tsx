@@ -26,6 +26,8 @@ import { signInWithGoogle, LoginData, signedIn } from '../api/Firebase/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import { getGreeting } from '../util/greetings';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../api/Firebase/init';
 
 function LoginPage() {
     const form = useForm({
@@ -43,6 +45,14 @@ function LoginPage() {
                     : 'Password must be at least 20 characters long',
         },
     });
+
+    /* Testing out emulator 
+    const USER_COLLECTION = collection(db, 'users');
+    let q = query(USER_COLLECTION, where('UUID', '==', 'eXcGAIrwGdxtyfsW9xEI'));
+    let querySnapshot = await getDocs(q);
+    let userDoc = querySnapshot.docs[0];
+    let userData = userDoc.data();
+    console.log(userData);*/
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -118,7 +128,7 @@ function LoginPage() {
             <Container size={420} my={40}>
                 <Title
                     align="center"
-                    sx={(theme) => ({
+                    sx={(theme: { fontFamily: any }) => ({
                         fontFamily: `Greycliff CF, ${theme.fontFamily}`,
                         fontWeight: 900,
                     })}

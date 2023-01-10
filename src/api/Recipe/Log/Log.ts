@@ -1,22 +1,22 @@
-import { DocumentReference } from "firebase/firestore";
-import { DMObject } from "../Topology/Abstracts";
-import { RecipeUser } from "./Recipe";
-import { MealData } from "./types";
+import { DocumentReference } from 'firebase/firestore';
+import { DMObject } from '../../Topology/Abstracts';
+import { RecipeUser } from '../Recipe';
+import { LogData } from '../types';
 
-export default class Meal extends DMObject {
+export default class Log extends DMObject {
     private name: string;
     private notes: string;
     private rating?: number;
     private prepTime?: number;
     private cookTime?: number;
     private factor: number;
-    private meal: "Breakfast" | "Lunch" | "Dinner" | "Snack";
+    private meal: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
     private recipeUserReference?: DocumentReference;
     private recipeUser?: RecipeUser;
     private timeEaten: Date;
     private timeRecorded: Date;
 
-    constructor(dataJSON: MealData, docRef?: DocumentReference) {
+    constructor(dataJSON: LogData, docRef?: DocumentReference) {
         super(dataJSON, docRef);
 
         this.name = dataJSON.name;

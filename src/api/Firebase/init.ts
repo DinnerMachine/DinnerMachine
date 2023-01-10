@@ -9,7 +9,7 @@
 @created 8/21/2022
 @updated 8/21/2022
 
-Copyright (c) 2022 Dallin Guisti. All rights reserved.
+Copyright (c) 2023 Dallin Guisti. All rights reserved.
 */
 
 /*
@@ -24,7 +24,11 @@ Table of Contents
 /* a. Firebase Imports */
 import { FirebaseApp, initializeApp } from 'firebase/app';
 //import { Analytics, getAnalytics } from "firebase/analytics";
-import { Firestore, getFirestore } from 'firebase/firestore';
+import {
+    connectFirestoreEmulator,
+    Firestore,
+    getFirestore,
+} from 'firebase/firestore';
 import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 // Exported variables {app, db, storage}
@@ -50,6 +54,7 @@ function initFirebase() {
     app = initializeApp(firebaseConfig);
     //analytics = getAnalytics(app);
     db = getFirestore();
+    connectFirestoreEmulator(db, 'localhost', 8080);
     storage = getStorage();
     firebaseInitialized = true;
 }

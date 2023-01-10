@@ -14,7 +14,23 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "baseUrl": "src",
+        "paths": {
+            "@api/*": ["api/*"],
+            "@api/errors/*": ["api/Errors/*"],
+            "@api/firebase/*": ["api/Firebase/*"],
+            "@api/organization/*": ["api/Organization/*"],
+            "@api/perms/*": ["api/Permissions/*"],
+            "@api/recipe/*": ["api/Recipe/*"],
+            "@api/topology/*": ["api/Topology/*"],
+            "@api/user/*": ["api/User/*"],
+            "@api/util/*": ["api/Util/*"],
+            "@components/*": ["components/*"],
+            "@pages/*": ["pages/*"],
+            "@ts/*": ["ts/*"],
+            "@util/*": ["util/*"]
+        }
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

@@ -10,7 +10,7 @@
 @created 8/21/2022
 @updated 8/21/2022
 
-Copyright (c) 2022 Dallin Guisti. All rights reserved.
+Copyright (c) 2023 Dallin Guisti. All rights reserved.
 */
 
 /*
@@ -26,10 +26,10 @@ Table of Contents
 /* ----- 1. Imports ----- */
 
 /* a. Type Imports */
-import { DataJSON } from "./types";
+import { DMObjectData } from './types';
 
 /* b. Object Parents */
-import { DMObject } from "./Abstracts";
+import { DMObject } from './Abstracts';
 
 export class Range extends DMObject {
     private min: number;
@@ -40,7 +40,7 @@ export class Range extends DMObject {
      * @param rangeJSON DataJSON object to initialize Range class with.
      * @param docRef DocumentReference to bind Range class to.
      */
-    constructor(rangeJSON: DataJSON, docRef = null) {
+    constructor(rangeJSON: DMObjectData, docRef = null) {
         super(rangeJSON, docRef);
 
         this.min = rangeJSON.min;
