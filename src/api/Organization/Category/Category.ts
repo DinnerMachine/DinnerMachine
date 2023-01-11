@@ -5,9 +5,9 @@ import {
     QueryDocumentSnapshot,
     SnapshotOptions,
 } from 'firebase/firestore';
-import { CategoryData } from './types';
+import { CategoryDataReference } from './types';
 
-export default class Category extends DMObject<CategoryData> {
+export default class Category extends DMObject<CategoryDataReference> {
     constructor(data: CategoryData, docRef?: DocumentReference | null) {
         super(data, docRef);
     }

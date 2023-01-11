@@ -6,6 +6,7 @@ import {
 import { StorageReference } from 'firebase/storage';
 import { RecordData, RecipeUserData } from '../Recipe/types';
 import { DMObjectData } from '../Topology/types';
+import { ActionDataReference } from './Action/types';
 
 /*export type UserData = DMObjectData & {
     UUID: string;
@@ -23,27 +24,28 @@ import { DMObjectData } from '../Topology/types';
     type: 'User';
 };*/
 
+// users/[userId] (Document)
 export type UserDataReference = DMObjectData & {
     UUID: string;
-    actions: ActionData; // Maaaybe change to its own object
-    perms: Perms;
+    actions: ActionDataReference;
+    perms: PermsHandlerDataReference;
     logs: CollectionReference;
-    profile: ProfileData;
+    profile: ProfileDataReference;
     recipes: CollectionReference;
-    tokens: TokenData;
+    tokens: TokenDataReference;
+    type: 'User';
 };
 
 export type UserDataObject = DMObjectData & {
     UUID: string;
-    actions: ActionData;
-    perms: Perms;
+    actions: Action;
+    perms: PermsHandler;
     logs: Logs;
-    profile: ProfileData;
+    profile: ProfileDataObject;
     recipes: Recipes;
-    tokens: TokenData;
+    tokens: TokenDataObject;
+    type: 'User';
 };
-
-export type UserData = UserDataReference | UserDataObject;
 
 /*export type InitUserData = {
     UUID?: string;
@@ -63,27 +65,27 @@ export type UserData = UserDataReference | UserDataObject;
 /**
  * @description User profile data type.
  */
-export type ProfileData = {
+// users/[userId].profile (Data)
+export type ProfileDataReference = {
     birthday: Date;
     email: string;
     name: string;
-    profilePicture?: StorageReference | string;
+    profilePicture?: StorageReference; // Storage references stored as string in Firestore
     username: string;
 };
 
-export type Profile = {
-    birthday?: Date;
+export type ProfileDataObject = {
+    birthday: Date;
     email: string;
     name: string;
-    profilePicturePath?: string;
-    profilePictureReference?: StorageReference;
+    profilePicture?: string; // Url of where it can be downlaoded
     username: string;
 };
 
-export type ActionData = {
-    [key: string]: Date;
+export type TokenDataReference = {
+    [key: string]: string;
 };
 
-export type TokenData = {
-    [key: string]: Date;
+export type TokenDataObject = {
+    [key: string]: string;
 };

@@ -1,5 +1,5 @@
 import { db } from '@api/Firebase/init';
-import Category from '@api/Organization/Category';
+import Category from '@api/Organization/Category/Category';
 import { CategoryData } from '@api/Organization/types';
 import Directions, { DirectionGroup } from '@api/Recipe/Direction/Directions';
 import RecipeGlobal, { RecipeUtils } from '@api/Recipe/Recipe';

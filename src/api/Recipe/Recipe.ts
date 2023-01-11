@@ -18,18 +18,52 @@ import {
     collection,
     getDoc,
     CollectionReference,
+    getDocs,
+    FirestoreDataConverter,
+    DocumentSnapshot,
+    SnapshotOptions,
 } from 'firebase/firestore';
 import { DMObject } from '@api/topology/Abstracts';
-import { RecipeGlobalDataReference } from '@api/recipe/types';
+import {
+    RecipeGlobalDataReference,
+    RecipesDataReference,
+    RecipeUserDataReference,
+} from '@api/recipe/types';
 import { db } from '@api/Firebase/init';
-import Category, { CategoryConverter } from '@api/organization/Category';
+import Category, {
+    CategoryConverter,
+} from '@api/Organization/Category/Category';
 import { CategoryDoesNotExistError } from '@api/organization/errors';
 import User, { UserConverter } from '@api/user/User';
 import { StorageReference } from 'firebase/storage';
 import { UserDoesNotExistError } from '@api/User/errors';
+import { AttachmentsDataReference } from './Attachment/types';
+import { TagsDataReference } from '@api/Organization/Tags/types';
+import { SourcesDataReference } from './Source/types';
+import { NotesDataReference } from './Note/types';
+import { Ingredients } from './Ingredient/Ingredient';
 
-export default class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
-    private attachments: StorageReference[]; // ==> Attachments
+export class Recipes extends DMObject<RecipesDataReference> {
+    private recipes: CollectionReference;
+    private type: 'Recipes' = 'Recipes';
+
+    constructor(data: RecipesDataReference, docRef?: DocumentReference | null) {
+        super(data, docRef);
+        this.recipes = data.recipes;
+    }
+
+    public async getRecipes(): Promise<RecipeUser[]> {
+        const recipes: RecipeUser[] = [];
+        const snapshot = await getDocs(this.recipes);
+        snapshot.forEach((doc) => {
+            recipes.push(doc.data() as RecipeUser);
+        });
+        return recipes;
+    }
+}
+
+export class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
+    private attachments: AttachmentsDataReference; // ==> Attachments
     private author?: string;
     private category: DocumentReference; // ==> Category
     private prepTime?: number;
@@ -41,9 +75,9 @@ export default class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
     private ingredients: CollectionReference; // ==> Ingredients
     private name: string;
     private reviews: CollectionReference; // ==> Reviews
-    private tags: DocumentReference[]; // ==> Tags
+    private tags: TagsDataReference; // ==> Tags
     private thumbnail?: StorageReference;
-    private sources: DocumentReference[]; // ==> Sources
+    private sources: SourcesDataReference; // ==> Sources
     private private: boolean;
     private type: 'RecipeGlobal' = 'RecipeGlobal';
 
@@ -111,6 +145,61 @@ export default class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
         return new Sources(this.sources);
     }
 }
+
+export const RecipeGlobalConverter: FirestoreDataConverter<RecipeGlobal> = {
+    toFirestore(recipeGlobal: RecipeGlobal): RecipeGlobalDataReference {
+        return recipeGlobal.getData();
+    },
+    fromFirestore(
+        snapshot: DocumentSnapshot,
+        options: SnapshotOptions,
+    ): RecipeGlobal {
+        const data = snapshot.data(options) as RecipeGlobalDataReference;
+        return new RecipeGlobal(data, snapshot.ref);
+    },
+};
+
+export class RecipeUser extends DMObject<RecipeUserDataReference> {
+    private name: string;
+    private recipeGlobal: DocumentReference;
+    private rating: number;
+    private notes: NotesDataReference;
+    private tags: TagsDataReference;
+    private type: 'RecipeUser' = 'RecipeUser';
+
+    constructor(
+        data: RecipeUserDataReference,
+        docRef?: DocumentReference | null,
+    ) {
+        super(data, docRef);
+        this.name = data.name;
+        this.recipeGlobal = data.recipeGlobal;
+        this.rating = data.rating;
+        this.notes = data.notes;
+        this.tags = data.tags;
+    }
+
+    async getRecipeGlobal(): Promise<RecipeGlobal> {
+        const recipeGlobalRef = this.recipeGlobal.withConverter(
+            RecipeGlobalConverter,
+        );
+        const recipeGlobal = await getDoc(recipeGlobalRef);
+        return recipeGlobal.data()!;
+    }
+}
+
+export const RecipeUserConverter: FirestoreDataConverter<RecipeUser> = {
+    toFirestore(recipeUser: RecipeUser): RecipeUserDataReference {
+        return recipeUser.getData();
+    },
+    fromFirestore(
+        snapshot: DocumentSnapshot,
+        options: SnapshotOptions,
+    ): RecipeUser {
+        const data = snapshot.data(options) as RecipeUserDataReference;
+        return new RecipeUser(data, snapshot.ref);
+    },
+};
 
 export namespace RecipeUtils {
     export var recipes = collection(db, 'recipes');

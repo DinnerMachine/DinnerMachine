@@ -1,4 +1,5 @@
-import { DMObject } from "../Topology/Abstracts";
+import { DMObject } from '../Topology/Abstracts';
+import { PermsHandlerDataReference } from './types';
 
 export default {};
-export class PermResolver extends DMObject {}
+export class PermsHandler extends DMObject<PermsHandlerDataReference> {}

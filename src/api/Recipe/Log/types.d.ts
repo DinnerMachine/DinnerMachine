@@ -1,6 +1,17 @@
-import Category from '@api/Organization/Category';
+import Category from '@api/Organization/Category/Category';
 import { DMObjectData } from '@api/Topology/types';
 import { DocumentReference } from 'firebase/firestore';
+
+// users/[userID]::Logs (Collection)
+export type LogsDataReference = DMObjectData & {
+    directions: DocumentReference[];
+    type: 'Directions';
+};
+
+export type LogsDataObject = DMObjectData & {
+    directions: DirectionGroup[];
+    type: 'Directions';
+};
 
 // users/[userID]::Logs/[logID] (Document)
 export type LogDataReference = DMObjectData & {

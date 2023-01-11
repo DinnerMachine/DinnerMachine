@@ -15,14 +15,14 @@ export type AttachmentsDataObject = DMObjectData & {
 // recipes/[recipeID].attachments[attachmentIndex] (Data)
 export type AttachmentDataReference = DMObjectData & {
     name: string;
-    url: string;
+    location: StorageReference;
     attachmentType: string;
     type: 'Attachment';
 };
 
 export type AttachmentDataObject = DMObjectData & {
     name: string;
-    url: string;
+    location: string; // Url of where it can be downloaded
     attachmentType: string;
     type: 'Attachment';
 };

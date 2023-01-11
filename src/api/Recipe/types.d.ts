@@ -37,25 +37,25 @@ import { StorageReference } from 'firebase/storage';
 
 import { DMObjectData } from '@api/Topology/types';
 
-import Category from '@api/Organization/Category';
+import Category from '@api/Organization/Category/Category';
 import User from '../User/User';
 import Directions from './Direction/Directions';
 import Ingredient, { DirectionIngredient } from './Ingredient/Ingredient';
 import Log from './Log/Log';
 import RecipeGlobal, { RecipeUser } from './Recipe';
-import Review from './Review';
+import Review from './Review/Review';
 import { TagsDataReference } from '@api/Organization/Tags/types';
 import { SourcesDataReference } from './Source/types';
 import { AttachmentsDataReference } from './Attachment/types';
 
 /* ----- 2. Recipes ----- */
 
-export type RecipesDataReference = {
+export type RecipesDataReference = DMObjectData & {
     recipes: CollectionReference; // ==> RecipeUser[]
     type: 'Recipes';
 };
 
-export type RecipesDataObject = {
+export type RecipesDataObject = DMObjectData & {
     recipes: RecipeUser[];
     type: 'Recipes';
 };
@@ -118,7 +118,7 @@ export type RecipeUserDataReference = DMObjectData & {
     name: string;
     recipeGlobal: DocumentReference; // Reference to global recipe
     rating: number;
-    notes: NotesData;
+    notes: NotesDataReference;
     tags: TagsDataReference;
     type: 'RecipeUser';
 };
