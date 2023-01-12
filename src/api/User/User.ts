@@ -35,23 +35,33 @@ import {
     DocumentSnapshot,
     FirestoreDataConverter,
     SnapshotOptions,
+    Timestamp,
 } from 'firebase/firestore';
-import { ActionData, ProfileData, TokenData, UserData } from '@api/User/types';
+import {
+    ProfileDataFirebase,
+    ProfileDataReference,
+    TokenDataReference,
+    UserDataFirebase,
+    UserDataReference,
+} from '@api/User/types';
 import { storage } from '@api/Firebase/init';
 import { ref } from 'firebase/storage';
+import { ActionsDataReference } from './Action/types';
+import { PermsHandlerDataReference } from '@api/Permissions/types';
 
 /* ----- 3. User Class ----- */
 
 /** User class that houses DinnerMachine user data. */
-export default class User extends DMObject<UserData> {
+export default class User extends DMObject<UserDataReference> {
     private UUID: string;
-    private actions: ActionData;
-    private perms: Perms;
-    private logs: CollectionReference; // ==> Logs
-    private profile: ProfileData;
-    private recipes: CollectionReference; // ==> Recipes
-    private tokens: TokenData;
-    constructor(data: UserData, docRef?: DocumentReference | null) {
+    private actions: ActionsDataReference;
+    private perms: PermsHandlerDataReference;
+    private logs: CollectionReference;
+    private profile: ProfileDataReference;
+    private recipes: CollectionReference;
+    private tokens: TokenDataReference[];
+
+    constructor(data: UserDataReference, docRef?: DocumentReference) {
         super(data, docRef);
         this.UUID = data.UUID;
         this.actions = data.actions;
@@ -63,22 +73,52 @@ export default class User extends DMObject<UserData> {
     }
 }
 
+export const ProfileDataConverter = {
+    toFirestore(profileUser: ProfileDataReference): ProfileDataFirebase {
+        var profileFirebase = profileUser as any;
+
+        if (profileUser.birthday)
+            profileFirebase.birthday = Timestamp.fromDate(profileUser.birthday);
+        if (profileUser.profilePicture)
+            profileFirebase.profilePicture =
+                profileUser.profilePicture.fullPath;
+
+        return profileFirebase as ProfileDataFirebase;
+    },
+    fromFirestore(profileFirebase: ProfileDataFirebase): ProfileDataReference {
+        var profileUser = profileFirebase as any;
+
+        if (profileFirebase.birthday)
+            profileUser.birthday = profileFirebase.birthday.toDate();
+        if (profileFirebase.profilePicture)
+            profileUser.profilePicture = ref(
+                storage,
+                profileFirebase.profilePicture,
+            );
+
+        return profileUser as ProfileDataReference;
+    },
+};
+
 export const UserConverter: FirestoreDataConverter<User> = {
-    toFirestore(user: User): UserData {
-        return user.getData();
+    toFirestore(user: User): UserDataFirebase {
+        var dataUser = user.getData();
+        var profileUser = dataUser.profile;
+        var dataFirebase = dataUser as any;
+        var profileFirebase = ProfileDataConverter.toFirestore(profileUser);
+
+        dataFirebase.profile = profileFirebase;
+
+        return dataFirebase as UserDataFirebase;
     },
     fromFirestore(snapshot: DocumentSnapshot, options: SnapshotOptions): User {
-        const dataFirebase = snapshot.data(options);
-        const data = dataFirebase;
-        if (data) {
-            if (dataFirebase.profile.birthday)
-                data.profile.birthday = dataFirebase.profile.birthday.toDate();
-            if (dataFirebase.profile.profilePicture)
-                data.profile.profilePicture = ref(
-                    storage,
-                    dataFirebase.profile.profilePicture,
-                );
-            return new User(data as UserData, snapshot.ref);
-        }
+        var dataFirebase = snapshot.data()!;
+        var profileFirebase = dataFirebase.profile;
+        var dataUser = dataFirebase as any;
+        var profileUser = ProfileDataConverter.fromFirestore(profileFirebase);
+
+        dataUser.profile = profileUser;
+
+        return new User(dataUser as UserDataReference, snapshot.ref);
     },
 };

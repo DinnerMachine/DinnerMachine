@@ -4,13 +4,11 @@ import { DocumentReference } from 'firebase/firestore';
 
 // users/[userID]::Logs (Collection)
 export type LogsDataReference = DMObjectData & {
-    directions: DocumentReference[];
-    type: 'Directions';
+    logs: DocumentReference[];
 };
 
 export type LogsDataObject = DMObjectData & {
-    directions: DirectionGroup[];
-    type: 'Directions';
+    logs: DirectionGroup[];
 };
 
 // users/[userID]::Logs/[logID] (Document)
@@ -25,7 +23,6 @@ export type LogDataReference = DMObjectData & {
     recipe?: DocumentReference;
     timeEaten: Date;
     timeRecorded: Date;
-    type: 'Log';
 };
 
 export type LogDataObject = DMObjectData & {
@@ -39,5 +36,4 @@ export type LogDataObject = DMObjectData & {
     recipe?: RecipeUser;
     timeEaten: Date;
     timeRecorded: Date;
-    type: 'Log';
 };

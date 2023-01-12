@@ -3,8 +3,9 @@ import {
     DocumentSnapshot,
     FirestoreDataConverter,
     DocumentReference,
+    CollectionReference,
 } from 'firebase/firestore';
-import { DMObject } from '../../Topology/Abstracts';
+import { DMObject, DMCollection } from '../../Topology/Abstracts';
 import { Range } from '../../Topology/Data';
 import { DMObjectData } from '../../Topology/types';
 import {
@@ -14,12 +15,14 @@ import {
     IngredientsDataReference,
 } from './types';
 
-export class Ingredients extends DMObject<IngredientsDataReference> {
+export class Ingredients extends DMCollection<IngredientsDataReference> {
     private ingredients: DocumentReference[];
-    private type: 'Ingredients' = 'Ingredients';
 
-    constructor(data: IngredientsDataReference, docRef?: DocumentReference) {
-        super(data, docRef);
+    constructor(
+        data: IngredientsDataReference,
+        collectionRef?: CollectionReference,
+    ) {
+        super(data, collectionRef);
         this.ingredients = data.ingredients;
     }
 }
@@ -28,7 +31,6 @@ export class IngredientGroup extends DMObject<IngredientGroupDataReference> {
     private name: string;
     private display: string;
     private ingredients: DocumentReference[];
-    private type: 'IngredientGroup' = 'IngredientGroup';
 
     constructor(
         data: IngredientGroupDataReference,
@@ -60,17 +62,13 @@ export default class Ingredient extends DMObject<IngredientDataReference> {
     private display: string;
     private quantity: number | string;
     private units: DocumentReference;
-    private type: 'Ingredient' = 'Ingredient';
 
     /**
      *
      * @param data
      * @param docRef
      */
-    constructor(
-        data: IngredientDataReference,
-        docRef?: DocumentReference | null,
-    ) {
+    constructor(data: IngredientDataReference, docRef?: DocumentReference) {
         super(data, docRef);
 
         this.name = data.name;
@@ -79,6 +77,13 @@ export default class Ingredient extends DMObject<IngredientDataReference> {
         this.units = data.units;
     }
 }
+
+/*
+    • IngredientParent is an abstract for both
+    • Ingredient is actual ingredient object
+        - Members can be Object | Reference
+    • IngredientReference is an object with references
+*/
 
 const IngredientConverter: FirestoreDataConverter<Ingredient> = {
     toFirestore: (ingredient: Ingredient) => {
@@ -96,11 +101,10 @@ const IngredientConverter: FirestoreDataConverter<Ingredient> = {
 export class DirectionIngredient extends DMObject<DirectionIngredientDataReference> {
     private display: string;
     private ingredient: DocumentReference[];
-    private type: 'DirectionIngredient' = 'DirectionIngredient';
 
     constructor(
         data: DirectionIngredientDataReference,
-        docRef?: DocumentReference | null,
+        docRef?: DocumentReference,
     ) {
         super(data, docRef);
         this.display = data.display;

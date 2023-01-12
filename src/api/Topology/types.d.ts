@@ -27,5 +27,4 @@ Table of Contents
  */
 export type DMObjectData = {
     [key: string]: any;
-    type: string;
 };

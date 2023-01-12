@@ -49,15 +49,13 @@ import { SourcesDataReference } from './Source/types';
 import { AttachmentsDataReference } from './Attachment/types';
 
 /* ----- 2. Recipes ----- */
-
+// users/[userID]/Recipes (Collection)
 export type RecipesDataReference = DMObjectData & {
-    recipes: CollectionReference; // ==> RecipeUser[]
-    type: 'Recipes';
+    recipes: DocumentReference[]; // ==> RecipeUser[]
 };
 
 export type RecipesDataObject = DMObjectData & {
     recipes: RecipeUser[];
-    type: 'Recipes';
 };
 
 /* ----- 3. RecipeGlobal ----- */
@@ -84,7 +82,6 @@ export type RecipeGlobalDataReference = DMObjectData & {
     thumbnail?: StorageReference; // Thumbnail storage location
     sources: SourcesDataReference; // Sources resolves to DocumentReference[]
     private: boolean;
-    type: 'RecipeGlobal';
 };
 
 /**
@@ -108,7 +105,6 @@ export type RecipeGlobalDataObject = DMObjectData & {
     thumbnail?: string; // Thumbnail storage location
     sources: Sources; // Sources resolves to DocumentReference[]
     private: boolean;
-    type: 'RecipeGlobal';
 };
 
 /* ----- 4. RecipeUser ----- */
@@ -120,7 +116,6 @@ export type RecipeUserDataReference = DMObjectData & {
     rating: number;
     notes: NotesDataReference;
     tags: TagsDataReference;
-    type: 'RecipeUser';
 };
 
 export type RecipeUserDataObject = DMObjectData & {
@@ -129,5 +124,4 @@ export type RecipeUserDataObject = DMObjectData & {
     rating: number;
     notes: Notes;
     tags: Tags;
-    type: 'RecipeUser';
 };

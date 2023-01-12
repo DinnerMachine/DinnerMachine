@@ -1,34 +1,61 @@
-import { DocumentReference } from 'firebase/firestore';
-import { DMObject } from '../../Topology/Abstracts';
+import {
+    CollectionReference,
+    DocumentReference,
+    DocumentSnapshot,
+    FirestoreDataConverter,
+    SnapshotOptions,
+} from 'firebase/firestore';
+import { DMCollection, DMObject } from '../../Topology/Abstracts';
+import { NotesDataReference } from '../Note/types';
 import { RecipeUser } from '../Recipe';
-import { LogData } from '../types';
+import { LogDataReference, LogsDataReference } from './types';
 
-export default class Log extends DMObject {
+export class Logs extends DMCollection<LogsDataReference> {
+    private logs: DocumentReference[];
+
+    constructor(data: LogsDataReference, docRef?: CollectionReference) {
+        super(data, docRef);
+
+        this.logs = data.directions;
+    }
+}
+
+export default class Log extends DMObject<LogDataReference> {
     private name: string;
-    private notes: string;
+    private notes: NotesDataReference;
     private rating?: number;
     private prepTime?: number;
     private cookTime?: number;
     private factor: number;
-    private meal: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
-    private recipeUserReference?: DocumentReference;
-    private recipeUser?: RecipeUser;
+    private category: DocumentReference;
+    private recipe?: DocumentReference;
     private timeEaten: Date;
     private timeRecorded: Date;
 
-    constructor(dataJSON: LogData, docRef?: DocumentReference) {
-        super(dataJSON, docRef);
+    constructor(data: LogDataReference, docRef?: DocumentReference) {
+        super(data, docRef);
 
-        this.name = dataJSON.name;
-        this.notes = dataJSON.notes;
-        this.rating = dataJSON.rating;
-        this.prepTime = dataJSON.prepTime;
-        this.cookTime = dataJSON.cookTime;
-        this.factor = dataJSON.factor;
-        this.meal = dataJSON.meal;
-        this.recipeUserReference = dataJSON.recipeUserReference;
-        this.timeEaten = dataJSON.timeEaten.toDate();
-        this.timeRecorded = dataJSON.timeRecorded.toDate();
-        if (dataJSON.recipeUser) this.recipeUser = dataJSON.recipeUser;
+        this.name = data.name;
+        this.notes = data.notes;
+        this.rating = data.rating;
+        this.prepTime = data.prepTime;
+        this.cookTime = data.cookTime;
+        this.factor = data.factor;
+        this.category = data.category;
+        this.recipe = data.recipe;
+        this.timeEaten = data.timeEaten;
+        this.timeRecorded = data.timeRecorded;
     }
 }
+
+export const LogConverter: FirestoreDataConverter<Log> = {
+    toFirestore: (log: Log) => {
+        return log.getData();
+    },
+    fromFirestore: (snapshot: DocumentSnapshot, options: SnapshotOptions) => {
+        const data: LogDataReference = snapshot.data(
+            options,
+        ) as LogDataReference;
+        return new Log(data, snapshot.ref);
+    },
+};

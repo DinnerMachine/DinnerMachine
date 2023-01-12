@@ -14,12 +14,10 @@ export type SourceDataReference = DMObjectData & {
     name: string;
     url: string;
     lastUpdated: Date;
-    type: 'Source';
 };
 
 export type SourceDataObject = DMObjectData & {
     name: string;
     url: string;
     lastUpdated: Date;
-    type: 'Source';
 };

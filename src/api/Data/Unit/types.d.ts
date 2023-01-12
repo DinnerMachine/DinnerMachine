@@ -9,7 +9,6 @@ export type UnitDataReference = DMObjectData & {
     abbreviationPlural: string;
     value: number;
     unitType: string;
-    type: 'Unit';
 };
 
 export type UnitDataObject = DMObjectData & {
@@ -20,5 +19,4 @@ export type UnitDataObject = DMObjectData & {
     abbreviationPlural: string;
     value: number;
     unitType: string;
-    type: 'Unit';
 };

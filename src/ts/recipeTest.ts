@@ -1,34 +1,57 @@
-import { db } from '@api/Firebase/init';
+import { db, storage } from '@api/Firebase/init';
 import Category from '@api/Organization/Category/Category';
-import { CategoryData } from '@api/Organization/types';
+import { CategoryDataReference } from '@api/Organization/Category/types';
+import { Tags } from '@api/Organization/Tags/Tag';
+import { TagsDataReference } from '@api/Organization/Tags/types';
+import { PermsDataReference } from '@api/Permissions/types';
 import Directions, { DirectionGroup } from '@api/Recipe/Direction/Directions';
-import RecipeGlobal, { RecipeUtils } from '@api/Recipe/Recipe';
-import { RecipeGlobalData, RecipeUserData } from '@api/Recipe/types';
-import { ActionData, ProfileData, TokenData, UserData } from '@api/User/types';
+import { Ingredients } from '@api/Recipe/Ingredient/Ingredient';
+import { IngredientsDataReference } from '@api/Recipe/Ingredient/types';
+import { Logs } from '@api/Recipe/Log/Log';
+import { LogsDataReference } from '@api/Recipe/Log/types';
+import RecipeGlobal, { Recipes } from '@api/Recipe/Recipe';
+import { ReviewsDataReference } from '@api/Recipe/Review/types';
+import { Sources } from '@api/Recipe/Source/Source';
+import { SourcesDataReference } from '@api/Recipe/Source/types';
+import {
+    RecipeGlobalData,
+    RecipeGlobalDataReference,
+    RecipesDataReference,
+} from '@api/Recipe/types';
+import { ActionsDataReference } from '@api/User/Action/types';
+import {
+    ActionData,
+    ProfileDataReference,
+    TokenData,
+    TokenDataReference,
+    UserData,
+    UserDataReference,
+} from '@api/User/types';
 import User from '@api/User/User';
-import { doc } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
+import { ref } from 'firebase/storage';
 
-var dinnerData: CategoryData = {
+var dinnerData: CategoryDataReference = {
     name: 'Dinner',
 };
 var dinnerCategory = new Category(dinnerData);
 
-var actions: ActionData = {};
-var permsData: PermsData = {};
+var actions: ActionsDataReference = {
+    actions: [],
+};
+var permsData: PermsDataReference = {};
 var perms = new Perms(permsData);
-var logData = {};
-var logs = new Logs(logData);
-var profile: ProfileData = {
+var logs = collection(db, 'users/dguisti/Logs');
+var profile: ProfileDataReference = {
     birthday: new Date('2006-10-11'),
     email: 'dallin@guisti.org',
     name: 'Dallin Guisti',
-    profilePicture: 'https://avatars.githubusercontent.com/u/10191084?v=4',
+    profilePicture: ref(storage, 'users/dguisti/profilePicture'),
     username: 'dguisti',
 };
-var recipeData: RecipeUserData[] = [];
-var recipes = new Recipes(recipeData);
-var tokens: TokenData = {};
-var dallinData: UserData = {
+var recipes = collection(db, 'users/dguisti/recipes');
+var tokens: TokenDataReference[] = [];
+var dallinData: UserDataReference = {
     UUID: 'ijNkTn9YwQUawYHYQ2YQMqTpCYF2',
     actions: actions,
     perms: perms,
@@ -42,19 +65,25 @@ var dallin = new User(dallinData);
 var directionGroups: DirectionGroup[] = [];
 var directions = new Directions(directionGroups);
 
-var ingredientData: IngredientData = {};
+var ingredientData: IngredientsDataReference = {
+    ingredients: [],
+};
 var ingredients = new Ingredients(ingredientData);
 
-var reviewData: ReviewData = {};
+var reviewData: ReviewsDataReference = {};
 var reviews = new Reviews(reviewData);
 
-var tagData: TagData = {};
+var tagData: TagsDataReference = {
+    tags: [],
+};
 var tags = new Tags(tagData);
 
-var sourceData: SourceData = {};
+var sourceData: SourcesDataReference = {
+    sources: [],
+};
 var sources = new Sources(sourceData);
 
-var pizzaData: RecipeGlobalData = {
+var pizzaData: RecipeGlobalDataReference = {
     attachments: [],
     author: "Mel's Kitchen Cafe",
     category: dinnerCategory,

@@ -6,7 +6,7 @@ import {
 import { StorageReference } from 'firebase/storage';
 import { RecordData, RecipeUserData } from '../Recipe/types';
 import { DMObjectData } from '../Topology/types';
-import { ActionDataReference } from './Action/types';
+import { ActionsDataReference } from './Action/types';
 
 /*export type UserData = DMObjectData & {
     UUID: string;
@@ -21,19 +21,17 @@ import { ActionDataReference } from './Action/types';
     tokens: {
         [key: string]: string;
     };
-    type: 'User';
 };*/
 
 // users/[userId] (Document)
 export type UserDataReference = DMObjectData & {
     UUID: string;
-    actions: ActionDataReference;
+    actions: ActionsDataReference;
     perms: PermsHandlerDataReference;
     logs: CollectionReference;
     profile: ProfileDataReference;
     recipes: CollectionReference;
-    tokens: TokenDataReference;
-    type: 'User';
+    tokens: TokenDataReference[]; // Maybe make its own type later
 };
 
 export type UserDataObject = DMObjectData & {
@@ -44,8 +42,11 @@ export type UserDataObject = DMObjectData & {
     profile: ProfileDataObject;
     recipes: Recipes;
     tokens: TokenDataObject;
-    type: 'User';
 };
+
+export interface UserDataFirebase extends UserDataReference {
+    profile: ProfileDataFirebase;
+}
 
 /*export type InitUserData = {
     UUID?: string;
@@ -66,13 +67,13 @@ export type UserDataObject = DMObjectData & {
  * @description User profile data type.
  */
 // users/[userId].profile (Data)
-export type ProfileDataReference = {
+export interface ProfileDataReference {
     birthday: Date;
     email: string;
     name: string;
     profilePicture?: StorageReference; // Storage references stored as string in Firestore
     username: string;
-};
+}
 
 export type ProfileDataObject = {
     birthday: Date;
@@ -81,6 +82,11 @@ export type ProfileDataObject = {
     profilePicture?: string; // Url of where it can be downlaoded
     username: string;
 };
+
+interface ProfileDataFirebase extends ProfileDataReference {
+    birthday: Timestamp;
+    profilePicture?: string;
+}
 
 export type TokenDataReference = {
     [key: string]: string;

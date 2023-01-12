@@ -8,7 +8,7 @@ import {
 import { CategoryDataReference } from './types';
 
 export default class Category extends DMObject<CategoryDataReference> {
-    constructor(data: CategoryData, docRef?: DocumentReference | null) {
+    constructor(data: CategoryData, docRef?: DocumentReference) {
         super(data, docRef);
     }
 }

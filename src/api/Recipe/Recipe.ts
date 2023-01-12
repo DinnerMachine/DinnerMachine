@@ -45,9 +45,8 @@ import { Ingredients } from './Ingredient/Ingredient';
 
 export class Recipes extends DMObject<RecipesDataReference> {
     private recipes: CollectionReference;
-    private type: 'Recipes' = 'Recipes';
 
-    constructor(data: RecipesDataReference, docRef?: DocumentReference | null) {
+    constructor(data: RecipesDataReference, docRef?: DocumentReference) {
         super(data, docRef);
         this.recipes = data.recipes;
     }
@@ -79,12 +78,8 @@ export class RecipeGlobal extends DMObject<RecipeGlobalDataReference> {
     private thumbnail?: StorageReference;
     private sources: SourcesDataReference; // ==> Sources
     private private: boolean;
-    private type: 'RecipeGlobal' = 'RecipeGlobal';
 
-    constructor(
-        data: RecipeGlobalDataReference,
-        docRef?: DocumentReference | null,
-    ) {
+    constructor(data: RecipeGlobalDataReference, docRef?: DocumentReference) {
         super(data, docRef);
         this.attachments = data.attachments;
         this.author = data.author;
@@ -165,12 +160,8 @@ export class RecipeUser extends DMObject<RecipeUserDataReference> {
     private rating: number;
     private notes: NotesDataReference;
     private tags: TagsDataReference;
-    private type: 'RecipeUser' = 'RecipeUser';
 
-    constructor(
-        data: RecipeUserDataReference,
-        docRef?: DocumentReference | null,
-    ) {
+    constructor(data: RecipeUserDataReference, docRef?: DocumentReference) {
         super(data, docRef);
         this.name = data.name;
         this.recipeGlobal = data.recipeGlobal;

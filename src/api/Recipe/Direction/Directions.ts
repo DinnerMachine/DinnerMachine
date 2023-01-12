@@ -7,21 +7,30 @@ import {
 } from 'firebase/firestore';
 import { DMCollection, DMObject } from '../../Topology/Abstracts';
 import { DirectionIngredient } from '../Ingredient/Ingredient';
-import { DirectionData } from '../types';
+import {
+    DirectionIngredientDataReference,
+    IngredientsDataReference,
+} from '../Ingredient/types';
+import {
+    DirectionDataReference,
+    DirectionGroupDataReference,
+    DirectionsDataReference,
+} from './types';
 
-export default class Directions extends DMCollection {
-    private directionGroups: DocumentReference[];
+export default class Directions extends DMCollection<DirectionsDataReference> {
+    private directions: DocumentReference[];
+
     constructor(
-        directionGroups: DocumentReference[] | DirectionGroup[],
-        collectionRef?: CollectionReference | null,
+        data: DirectionsDataReference,
+        collectionRef?: CollectionReference,
     ) {
-        super();
-        this.directionGroups = directionGroups;
+        super(data, collectionRef);
+        this.directions = data.directions;
     }
 
     async getDirectionGroups(): Promise<DirectionGroup[]> {
         var directionGroups: DirectionGroup[] = [];
-        for (var docRef of this.directionGroups) {
+        for (var docRef of this.directions) {
             var doc = await getDoc(docRef);
             directionGroups.push(new DirectionGroup(doc, docRef));
         }
@@ -29,28 +38,32 @@ export default class Directions extends DMCollection {
     }
 }
 
-export class DirectionGroup extends DMObject<DirectionGroupData> {
+export class DirectionGroup extends DMObject<DirectionGroupDataReference> {
     private directions: Direction[];
     private name: string;
+    private display: string;
 
-    constructor(data: DirectionGroupData, docRef?: DocumentReference | null) {
+    constructor(data: DirectionGroupDataReference, docRef?: DocumentReference) {
         super(data, docRef);
         this.directions = data.directions;
         this.name = data.name;
+        this.display = data.display;
     }
     getDirections(): Direction[] {
         return this.directions;
     }
 }
 
-export class Direction extends DMObject<DirectionData> {
-    private content: (String | DirectionIngredient)[];
+export class Direction extends DMObject<DirectionDataReference> {
+    private content: (String | DirectionIngredientDataReference)[];
     private index: number;
+    private ingredients: IngredientsDataReference;
 
-    constructor(data: DirectionData, docRef?: DocumentReference | null) {
+    constructor(data: DirectionDataReference, docRef?: DocumentReference) {
         super(data, docRef);
 
         this.content = data.content;
         this.index = data.index;
+        this.ingredients = data.ingredients;
     }
 }

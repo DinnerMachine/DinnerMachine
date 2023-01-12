@@ -27,6 +27,7 @@ Table of Contents
 /* ----- 1. Imports ----- */
 /* a. Firebase Imports */
 import {
+    CollectionReference,
     DocumentReference,
     FirestoreDataConverter,
     getDoc,
@@ -38,17 +39,17 @@ import { DMObjectData } from './types';
 export abstract class DMObject<DMObjectData> {
     protected bound: boolean;
     protected data: DMObjectData;
-    protected docRef: DocumentReference | null;
+    protected docRef?: DocumentReference;
 
     /** 
     @description Generic DMObject with methods for general data management.
     @param data DMObjectData object to initialize DMObject class with.
     @param docRef - DocumentReference to bind DMObject class to.
     */
-    constructor(data: DMObjectData, docRef?: DocumentReference | null) {
+    constructor(data: DMObjectData, docRef?: DocumentReference) {
         this.bound = false;
         this.data = data;
-        this.docRef = docRef || null;
+        this.docRef = docRef;
 
         if (docRef) this.bound = true;
     }
@@ -58,11 +59,19 @@ export abstract class DMObject<DMObjectData> {
     }
 }
 
-export abstract class DMCollection {}
+export abstract class DMCollection<DMObjectData> {
+    protected data: DMObjectData;
+    protected collectionRef?: CollectionReference;
+    constructor(data: DMObjectData, collectionRef?: CollectionReference) {
+        this.data = data;
+        this.collectionRef = collectionRef;
+    }
+}
 
-const DMObjectConverter: FirestoreDataConverter<DMObject> = {
-    toFirestore: (object: DMObject) => {
-        return object.getDataJSON();
+/*
+const DMObjectConverter: FirestoreDataConverter<DMObject<DMObjectData>> = {
+    toFirestore: (object: DMObject<DMObjectData>) => {
+        return object.getData();
     },
     fromFirestore: async (snapshot, options) => {
         const data = snapshot.data(options);
@@ -71,3 +80,4 @@ const DMObjectConverter: FirestoreDataConverter<DMObject> = {
         return dmObject;
     },
 };
+*/
