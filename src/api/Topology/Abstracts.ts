@@ -61,10 +61,14 @@ export abstract class DMObject<DMObjectData> {
 
 export abstract class DMCollection<DMObjectData> {
     protected data: DMObjectData;
-    protected collectionRef?: CollectionReference;
+    protected _collectionRef?: CollectionReference;
     constructor(data: DMObjectData, collectionRef?: CollectionReference) {
         this.data = data;
-        this.collectionRef = collectionRef;
+        this._collectionRef = collectionRef;
+    }
+
+    public get collectionRef(): CollectionReference | undefined {
+        return this._collectionRef;
     }
 }
 

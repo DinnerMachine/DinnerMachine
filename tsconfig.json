@@ -29,7 +29,9 @@
             "@components/*": ["components/*"],
             "@pages/*": ["pages/*"],
             "@ts/*": ["ts/*"],
-            "@util/*": ["util/*"]
+            "@util/*": ["util/*"],
+            "@assets/*": ["assets/*"]
+
         }
     },
     "include": ["src"],

@@ -1,5 +1,5 @@
 import { DMObjectData } from '@api/Topology/types';
 
-export type CategoryDataReference = DMObjectData & {
+export interface CategoryDataReference extends DMObjectData {
     name: string;
-};
+}

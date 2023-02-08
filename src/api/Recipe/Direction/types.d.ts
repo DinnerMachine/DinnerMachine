@@ -6,36 +6,36 @@ import {
 import { Direction, DirectionGroup } from './Directions';
 
 // recipes/[recipeID]::Directions (Collection)
-export type DirectionsDataReference = DMObjectData & {
-    directions: DocumentReference[];
-};
+export interface DirectionsDataReference extends DMObjectData {
+    directions?: DocumentReference[];
+}
 
-export type DirectionsDataObject = DMObjectData & {
-    directions: DirectionGroup[];
-};
+export interface DirectionsDataObject extends DMObjectData {
+    directions?: DirectionGroup[];
+}
 
 // recipes/[recipeID]::Directions/[g_directionGroupId] (Document)
-export type DirectionGroupDataReference = DMObjectData & {
-    name: string;
-    display: string;
-    directions: DocumentReference[];
-};
+export interface DirectionGroupDataReference extends DMObjectData {
+    name?: string;
+    display?: string;
+    directions?: DocumentReference[];
+}
 
-export type DirectionGroupDataObject = DMObjectData & {
-    name: string;
-    display: string;
-    directions: Direction[];
-};
+export interface DirectionGroupDataObject extends DMObjectData {
+    name?: string;
+    display?: string;
+    directions?: Direction[];
+}
 
 // recipes/[recipeID]::Directions/[d_directionId] (Document)
-export type DirectionDataReference = DMObjectData & {
+export interface DirectionDataReference extends DMObjectData {
     content: (String | DirectionIngredientDataReference)[];
-    index: number;
-    ingredients: IngredientsDataReference;
-};
+    index?: number;
+    ingredients?: IngredientsDataReference;
+}
 
-export type DirectionDataObject = DMObjectData & {
+export interface DirectionDataObject extends DMObjectData {
     content: (String | DirectionIngredient)[];
-    index: number;
-    ingredients: Ingredients;
-};
+    index?: number;
+    ingredients?: Ingredients;
+}

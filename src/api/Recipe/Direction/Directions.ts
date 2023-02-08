@@ -1,9 +1,11 @@
 import { db } from '@api/Firebase/init';
 import {
+    collection,
     CollectionReference,
     doc,
     DocumentReference,
     getDoc,
+    getDocs,
 } from 'firebase/firestore';
 import { DMCollection, DMObject } from '../../Topology/Abstracts';
 import { DirectionIngredient } from '../Ingredient/Ingredient';
@@ -18,7 +20,7 @@ import {
 } from './types';
 
 export default class Directions extends DMCollection<DirectionsDataReference> {
-    private directions: DocumentReference[];
+    private directions: CollectionReference;
 
     constructor(
         data: DirectionsDataReference,
@@ -32,20 +34,27 @@ export default class Directions extends DMCollection<DirectionsDataReference> {
         var directionGroups: DirectionGroup[] = [];
         for (var docRef of this.directions) {
             var doc = await getDoc(docRef);
-            directionGroups.push(new DirectionGroup(doc, docRef));
+            if (doc.exists())
+                directionGroups.push(new DirectionGroup(doc.data(), docRef));
         }
         return directionGroups;
+    }
+    public static async fromCollection(
+        collection: CollectionReference,
+    ): Promise<Directions> {
+        var docs = (await getDocs(collection)).docs;
+        return new Directions({ directions: docs }, collection);
     }
 }
 
 export class DirectionGroup extends DMObject<DirectionGroupDataReference> {
     private directions: Direction[];
-    private name: string;
-    private display: string;
+    private name?: string;
+    private display?: string;
 
     constructor(data: DirectionGroupDataReference, docRef?: DocumentReference) {
         super(data, docRef);
-        this.directions = data.directions;
+        this.directions = data.directions || [];
         this.name = data.name;
         this.display = data.display;
     }
@@ -56,7 +65,7 @@ export class DirectionGroup extends DMObject<DirectionGroupDataReference> {
 
 export class Direction extends DMObject<DirectionDataReference> {
     private content: (String | DirectionIngredientDataReference)[];
-    private index: number;
+    private index?: number;
     private ingredients: IngredientsDataReference;
 
     constructor(data: DirectionDataReference, docRef?: DocumentReference) {

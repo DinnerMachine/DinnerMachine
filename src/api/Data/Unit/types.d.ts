@@ -1,7 +1,7 @@
 import { DMObjectData } from '@api/Topology/types';
 
 // system/data::Units/[unitID] (Document)
-export type UnitDataReference = DMObjectData & {
+export interface UnitDataReference extends DMObjectData {
     name: string;
     display: string;
     displayPlural: string;
@@ -9,9 +9,9 @@ export type UnitDataReference = DMObjectData & {
     abbreviationPlural: string;
     value: number;
     unitType: string;
-};
+}
 
-export type UnitDataObject = DMObjectData & {
+export interface UnitDataObject extends DMObjectData {
     name: string;
     display: string;
     displayPlural: string;
@@ -19,4 +19,4 @@ export type UnitDataObject = DMObjectData & {
     abbreviationPlural: string;
     value: number;
     unitType: string;
-};
+}

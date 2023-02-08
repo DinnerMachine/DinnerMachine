@@ -1,19 +1,19 @@
 import { DMObjectData } from '@api/Topology/types';
 
 // users/[userId]::Recipes/[recipeID].notes (Data)
-export type NotesDataReference = DMObjectData & {
-    notes: NoteDataReference[];
-};
+export interface NotesDataReference extends DMObjectData {
+    notes?: NoteDataReference[];
+}
 
-export type NotesDataObject = DMObjectData & {
-    notes: Note[];
-};
+export interface NotesDataObject extends DMObjectData {
+    notes?: Note[];
+}
 
 // users/[userId]::Recipes/[recipeID].notes[noteIndex] (Data)
-export type NoteDataReference = DMObjectData & {
-    note: string;
-};
+export interface NoteDataReference extends DMObjectData {
+    note?: string;
+}
 
-export type NoteDataObject = DMObjectData & {
-    note: string;
-};
+export interface NoteDataObject extends DMObjectData {
+    note?: string;
+}

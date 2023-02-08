@@ -9,7 +9,7 @@ import { Ingredients } from '@api/Recipe/Ingredient/Ingredient';
 import { IngredientsDataReference } from '@api/Recipe/Ingredient/types';
 import { Logs } from '@api/Recipe/Log/Log';
 import { LogsDataReference } from '@api/Recipe/Log/types';
-import RecipeGlobal, { Recipes } from '@api/Recipe/Recipe';
+import { RecipeGlobal, Recipes } from '@api/Recipe/Recipe';
 import { ReviewsDataReference } from '@api/Recipe/Review/types';
 import { Sources } from '@api/Recipe/Source/Source';
 import { SourcesDataReference } from '@api/Recipe/Source/types';
@@ -31,6 +31,34 @@ import User from '@api/User/User';
 import { collection } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
 
+var pizza = new RecipeGlobal({
+    author: "Mel's Kitchen Cafe",
+    prepTime: 25,
+
+    cookTime: 10,
+    serves: 4,
+    description:
+        'This simple recipe for quick and easy homemade pizza dough is amazing! It comes together in minutes, rises quickly, and makes incredible homemade pizza!',
+    name: 'Quick and Foolproof Pizza Dough',
+    private: true,
+});
+
+pizza.directions = new Directions({
+    directions: [
+        new DirectionGroup({
+            directions: [],
+            name: 'Dough',
+            display: 'Dough',
+        }),
+        new DirectionGroup({
+            directions: [],
+            name: 'Sauce',
+            display: 'Sauce',
+        }),
+    ],
+});
+
+/*
 var dinnerData: CategoryDataReference = {
     name: 'Dinner',
 };
@@ -104,4 +132,4 @@ var pizzaData: RecipeGlobalDataReference = {
     private: true,
 };
 
-var pizza = new RecipeGlobal(pizzaData);
+var pizza = new RecipeGlobal(pizzaData);*/

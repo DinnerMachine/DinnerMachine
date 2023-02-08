@@ -2,10 +2,10 @@
 ~ ~ ~ DinnerMachine - Recipe Manager & Generator ~ ~ ~
 - User/User -
 
-@file: api/Recipe/types.ts
-@author: Dallin Guisti
-@description: Type definitions for recipes.
-@version: 1.0.1
+@file?: api/Recipe/types.ts
+@author?: Dallin Guisti
+@description?: Type definitions for recipes.
+@version?: 1.0.1
 @created 8/21/2022
 @updated 1/9/2023
 
@@ -50,13 +50,13 @@ import { AttachmentsDataReference } from './Attachment/types';
 
 /* ----- 2. Recipes ----- */
 // users/[userID]/Recipes (Collection)
-export type RecipesDataReference = DMObjectData & {
-    recipes: DocumentReference[]; // ==> RecipeUser[]
-};
+export interface RecipesDataReference extends DMObjectData {
+    recipes?: DocumentReference[]; // ==> RecipeUser[]
+}
 
-export type RecipesDataObject = DMObjectData & {
-    recipes: RecipeUser[];
-};
+export interface RecipesDataObject extends DMObjectData {
+    recipes?: RecipeUser[];
+}
 
 /* ----- 3. RecipeGlobal ----- */
 // recipes/[recipeID] (Document)
@@ -65,63 +65,63 @@ export type RecipesDataObject = DMObjectData & {
  * DataReference
  * Used for raw data transfer to/from Firestore.
  */
-export type RecipeGlobalDataReference = DMObjectData & {
-    attachments: AttachmentsDataReference; // Storage locations for attachments
+export interface RecipeGlobalDataReference extends DMObjectData {
+    attachments?: AttachmentsDataReference; // Storage locations for attachments
     author?: string;
-    category: DocumentReference; // Category document reference
+    category?: DocumentReference; // Category document reference
     prepTime?: number;
     cookTime?: number;
     serves?: number;
     creator?: DocumentReference; // Document reference to User
     description?: string;
-    directions: CollectionReference; // Directions Collection
-    ingredients: CollectionReference; // Ingredients Collection
-    name: string;
-    reviews: CollectionReference; // Reviews Collection
-    tags: TagsDataReference; // Tags resolves to DocumentReference[]
+    directions?: CollectionReference; // Directions Collection
+    ingredients?: CollectionReference; // Ingredients Collection
+    name?: string;
+    reviews?: CollectionReference; // Reviews Collection
+    tags?: TagsDataReference; // Tags resolves to DocumentReference[]
     thumbnail?: StorageReference; // Thumbnail storage location
-    sources: SourcesDataReference; // Sources resolves to DocumentReference[]
-    private: boolean;
-};
+    sources?: SourcesDataReference; // Sources resolves to DocumentReference[]
+    private?: boolean;
+}
 
 /**
  * DataObject
  * Used for local manipulation of recipe data.
  */
-export type RecipeGlobalDataObject = DMObjectData & {
-    attachments: Attachments; // Storage locations for attachments
+export interface RecipeGlobalDataObject extends DMObjectData {
+    attachments?: Attachments; // Storage locations for attachments
     author?: string;
-    category: Category; // Category document reference
+    category?: Category; // Category document reference
     prepTime?: number;
     cookTime?: number;
     serves?: number;
     creator?: User; // Document reference to User
     description?: string;
-    directions: Directions; // Directions Collection
-    ingredients: Ingredients; // Ingredients Collection
-    name: string;
-    reviews: Reviews; // Reviews Collection
-    tags: Tags; // Tags resolves to DocumentReference[]
+    directions?: Directions; // Directions Collection
+    ingredients?: Ingredients; // Ingredients Collection
+    name?: string;
+    reviews?: Reviews; // Reviews Collection
+    tags?: Tags; // Tags resolves to DocumentReference[]
     thumbnail?: string; // Thumbnail storage location
-    sources: Sources; // Sources resolves to DocumentReference[]
-    private: boolean;
-};
+    sources?: Sources; // Sources resolves to DocumentReference[]
+    private?: boolean;
+}
 
 /* ----- 4. RecipeUser ----- */
 // users/[userID]::Recipes/[recipeID] (Document)
 
-export type RecipeUserDataReference = DMObjectData & {
-    name: string;
-    recipeGlobal: DocumentReference; // Reference to global recipe
-    rating: number;
-    notes: NotesDataReference;
-    tags: TagsDataReference;
-};
+export interface RecipeUserDataReference extends DMObjectData {
+    name?: string;
+    recipeGlobal?: DocumentReference; // Reference to global recipe
+    rating?: number;
+    notes?: NotesDataReference;
+    tags?: TagsDataReference;
+}
 
-export type RecipeUserDataObject = DMObjectData & {
-    name: string;
-    recipeGlobal: RecipeGlobal; // Reference to global recipe
-    rating: number;
-    notes: Notes;
-    tags: Tags;
-};
+export interface RecipeUserDataObject extends DMObjectData {
+    name?: string;
+    recipeGlobal?: RecipeGlobal; // Reference to global recipe
+    rating?: number;
+    notes?: Notes;
+    tags?: Tags;
+}

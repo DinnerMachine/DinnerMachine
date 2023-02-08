@@ -1,21 +1,21 @@
 import { DMObjectData } from '@api/Topology/types';
 
 // users/[userId].actions (Data)
-export type ActionsDataReference = DMObjectData & {
-    actions: ActionDataReference[];
-};
+export interface ActionsDataReference extends DMObjectData {
+    actions?: ActionDataReference[];
+}
 
-export type ActionsDataObject = DMObjectData & {
-    actions: Action[];
-};
+export interface ActionsDataObject extends DMObjectData {
+    actions?: Action[];
+}
 
 // users/[userId].actions[actionIndex] (Data)
-export type ActionDataReference = DMObjectData & {
-    name: string;
-    date: Date;
-};
+export interface ActionDataReference extends DMObjectData {
+    name?: string;
+    date?: Date;
+}
 
-export type ActionDataObject = DMObjectData & {
-    name: string;
-    date: Date;
-};
+export interface ActionDataObject extends DMObjectData {
+    name?: string;
+    date?: Date;
+}
